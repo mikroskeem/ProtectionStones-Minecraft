@@ -36,14 +36,14 @@ public class ArgView {
         RegionManager rgm = ProtectionStones.getRegionManagerWithPlayer(p);
 
         if (!p.hasPermission("protectionstones.view") && !p.hasPermission("protectionstones.view.others")) {
-            p.sendMessage(ChatColor.RED + "You don't have permission to use that command");
+            p.sendMessage("Sul pole luba kasutada seda §ckäsklust.");
             return true;
         }
         if (ProtectionStones.hasNoAccess(rgm.getRegion(psID), p, wg.wrapPlayer(p), true)) {
-            p.sendMessage(ChatColor.RED + "You are not allowed to do that here.");
+            p.sendMessage("Sa ei tohi §ckasutada§f seda siin.");
             return true;
         }
-        p.sendMessage(ChatColor.YELLOW + "Generating border...");
+        p.sendMessage("Genereerin §cäärt...");
 
         BlockVector3 minVector = rgm.getRegion(psID).getMinimumPoint();
         BlockVector3 maxVector = rgm.getRegion(psID).getMaximumPoint();
@@ -102,11 +102,11 @@ public class ArgView {
                 }
             }
 
-            Bukkit.getScheduler().runTaskLater(ProtectionStones.getPlugin(), () -> p.sendMessage(ChatColor.YELLOW + "Done! The border will disappear after 30 seconds!"), wait);
+            Bukkit.getScheduler().runTaskLater(ProtectionStones.getPlugin(), () -> p.sendMessage("§cTehtud!&f Äär kaob §c30&f sekundi pärast ära."), wait);
 
             Bukkit.getScheduler().runTaskLater(ProtectionStones.getPlugin(), () -> {
-                p.sendMessage(ChatColor.YELLOW + "Removing border...");
-                p.sendMessage(ChatColor.GREEN + "If you still see ghost blocks, relog!");
+                p.sendMessage("Eemaldan §cääre...");
+                p.sendMessage("Kui te ikka näete §cvõltsplokke§f siis §clogige§f uuesti sisse!");
                 for (Block b : blocks) {
                     if (b.getWorld().isChunkLoaded(b.getLocation().getBlockX()/16, b.getLocation().getBlockZ()/16)) {
                         p.sendBlockChange(b.getLocation(), b.getBlockData());

@@ -37,7 +37,7 @@ public class ArgRegion {
         RegionManager rgm = ProtectionStones.getRegionManagerWithPlayer(p);
 
         if (!p.hasPermission("protectionstones.region")) {
-            p.sendMessage(ChatColor.RED + "You don't have permission to use Region Commands");
+            p.sendMessage("Sul pole §cluba§f kasutada §cadmin§f alakaitse käsklusi.");
             return true;
         }
 

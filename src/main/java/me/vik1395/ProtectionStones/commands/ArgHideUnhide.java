@@ -37,19 +37,19 @@ public class ArgHideUnhide {
 
         // preliminary checks
         if (arg.equals("unhide") && !p.hasPermission("protectionstones.unhide")) {
-            p.sendMessage(ChatColor.RED + "You don't have permission to use that command");
+            p.sendMessage("Sul pole §cluba§f kasutada seda käsklust.");
             return true;
         }
         if (arg.equals("hide") && !p.hasPermission("protectionstones.hide")) {
-            p.sendMessage(ChatColor.RED + "You don't have permission to use that command");
+            p.sendMessage("Sul pole §cluba§f kasutada seda käsklust.");
             return true;
         }
         if (ProtectionStones.hasNoAccess(rgm.getRegion(psID), p, wg.wrapPlayer(p), false)) {
-            p.sendMessage(ChatColor.RED + "You are not allowed to do that here.");
+            p.sendMessage("Sul pole §cluba§f kasutada seda siin.");
             return true;
         }
         if (!psID.substring(0, 2).equals("ps")) {
-            p.sendMessage(ChatColor.YELLOW + "Not a ProtectionStones Region");
+            p.sendMessage("See ei ole §cProtectionStones§f alakaitse!");
             return true;
         }
         PSLocation psl = ProtectionStones.parsePSRegionToLocation(psID);
@@ -63,7 +63,7 @@ public class ArgHideUnhide {
 
         if (ProtectionStones.mats.contains(currentType.toString())) {
             if (arg.equals("unhide")) {
-                p.sendMessage(ChatColor.YELLOW + "This PStone doesn't appear hidden...");
+                p.sendMessage("See §cplokk§f ei tundu olevat §cpeidetud...");
                 return true;
             }
             if (!hideFile.contains(entry)) {
@@ -75,11 +75,11 @@ public class ArgHideUnhide {
                 }
                 blockToEdit.setType(Material.AIR);
             } else {
-                p.sendMessage(ChatColor.YELLOW + "This PStone appears to already be hidden...");
+                p.sendMessage("See §cplokk§f tundub olevat juba §cpeidetud...");
             }
         } else {
             if (arg.equals("hide")) {
-                p.sendMessage(ChatColor.YELLOW + "This PStone appears to already be hidden...");
+                p.sendMessage("See §cplokk§f tundub olevat juba §cpeidetud...");
                 return true;
             }
 
@@ -100,7 +100,7 @@ public class ArgHideUnhide {
                     //TODO removed subtype support blockToUnhide.setData((byte) (Integer.parseInt(subtype)));
                 }
             } else {
-                p.sendMessage(ChatColor.YELLOW + "This PStone doesn't appear hidden...");
+                p.sendMessage("See §cplokk§f ei tundu olevat §cpeidetud...");
             }
         }
         return true;

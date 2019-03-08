@@ -27,24 +27,24 @@ import org.bukkit.entity.Player;
 public class ArgAddRemove {
     private static OfflinePlayer checks(Player p, String args[], String psID, RegionManager rgm, WorldGuardPlugin wg, String permType, boolean checkPlayer) {
         if (permType.equals("members") && !p.hasPermission("protectionstones.members")) {
-            p.sendMessage(ChatColor.RED + "You don't have permission to use Members Commands");
+            p.sendMessage("Sul pole §cluba§f kasutada Ala memberi §ckäsklusi");
             return null;
         } else if (permType.equals("owners") && !p.hasPermission("protectionstones.owners")) {
-            p.sendMessage(ChatColor.RED + "You don't have permission to use Owners Commands");
+            p.sendMessage("Sul pole §cluba§f kasutada Ala omaniku §ckäsklusi");
             return null;
         } else if (ProtectionStones.hasNoAccess(rgm.getRegion(psID), p, wg.wrapPlayer(p), false)) {
-            p.sendMessage(ChatColor.RED + "You are not allowed to do that here.");
+            p.sendMessage("Sa ei tohi §ckasutada§f seda siin.");
             return null;
         } else if (args.length < 2) {
-            p.sendMessage(ChatColor.RED + "This command requires a player name.");
+            p.sendMessage("See §ckäsklus§f vajab §cmängijanime.");
             return null;
         } else if (psID.equals("")) {
-            p.sendMessage(ChatColor.RED + "You are not in a protection stone region!");
+            p.sendMessage("Sa ei ole §cplokki kaitsealas.");
             return null;
         }
         OfflinePlayer op = Bukkit.getOfflinePlayer(args[1]);
         if ((op == null || !op.hasPlayedBefore()) && checkPlayer) {
-            p.sendMessage(ChatColor.RED + "Player not found. Are your sure they have joined the server before?");
+            p.sendMessage("§cMängijat§f ei leitud. Olete kindel, et ta on §cliitunud§f selle serveriga ennem?");
             return null;
         }
         return op;
@@ -86,9 +86,9 @@ public class ArgAddRemove {
         }
 
         if (type.equals("add") || type.equals("addowner")) {
-            p.sendMessage(ChatColor.YELLOW + op.getName() + " has been added to your region.");
+            p.sendMessage(op.getName() + " on lisatud sinu §ckaitsealale.");
         } else if (type.equals("remove") || type.equals("removeowner")) {
-            p.sendMessage(ChatColor.YELLOW + op.getName() + " has been removed from region.");
+            p.sendMessage(op.getName() + " on eemaldatud sinu §ckaitsealast.");
         }
         return true;
     }

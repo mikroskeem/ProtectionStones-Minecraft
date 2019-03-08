@@ -131,14 +131,14 @@ public class ListenerClass implements Listener {
                         }
                         if (count >= max) {
                             if (max != 0) {
-                                p.sendMessage(ChatColor.RED + "You can not create any more protected regions");
+                                p.sendMessage("Sa ei saa teha rohkem §ckaitsealasid!");
                                 e.setCancelled(true);
                                 return;
                             }
                         }
                         for (String world : ProtectionStones.deniedWorlds) {
                             if (world.equals(p.getLocation().getWorld().getName())) {
-                                p.sendMessage(ChatColor.RED + "You can not create protections in this world");
+                                p.sendMessage("Sa ei saa §cala kaitsta§f siin §cmaailmas!");
                                 e.setCancelled(true);
                                 return;
                             }
@@ -195,7 +195,7 @@ public class ListenerClass implements Listener {
                                 e1.printStackTrace();
                             } // commented out below because the region gets removed anyways ¯\_(ツ)_/¯
                             //if (!p.hasPermission("protectionstones.admin")) {
-                            p.sendMessage(ChatColor.YELLOW + "You can not place a protection here as it overlaps another region");
+                            p.sendMessage("Sa ei saa siin §cala kaitsta§f kuna see kattub kellegi §cteise alaga.");
                             e.setCancelled(true);
                             return;
                             //}
@@ -238,7 +238,7 @@ public class ListenerClass implements Listener {
                     }
                     region.setFlags(newFlags);
                     region.setPriority(ProtectionStones.priority);
-                    p.sendMessage(ChatColor.YELLOW + "This area is now protected.");
+                    p.sendMessage("See §cala§f on nüüd §ckaitstud.");
                     try {
                         rm.saveChanges();
                         rm.save();
@@ -264,11 +264,11 @@ public class ListenerClass implements Listener {
                         }
                     }
                 } else {
-                    p.sendMessage(ChatColor.RED + "You don't have permission to place a ProtectionStone.");
+                    p.sendMessage("Sul pole §cõigust§f maha panna §calakaitset.");
                     e.setCancelled(true);
                 }
             } else {
-                p.sendMessage(ChatColor.RED + "You can't protect that area.");
+                p.sendMessage("Sa ei saa §ckaitsta§f seda §cala.");
                 e.setCancelled(true);
             }
         }
@@ -329,9 +329,9 @@ public class ListenerClass implements Listener {
                                     } catch (Exception e1) {
                                         System.out.println("[ProtectionStones] WorldGuard Error [" + e1 + "] during Region File Save");
                                     }
-                                    player.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("This area is no longer protected.").toString());
+                                    player.sendMessage((new StringBuilder()).append().append("See §cala§f pole enam §ckaitstud.").toString());
                                 } else {
-                                    player.sendMessage((new StringBuilder()).append(ChatColor.RED).append("You don't have enough room in your inventory.").toString());
+                                    player.sendMessage((new StringBuilder()).append().append("Sul pole §cküllalt§f ruumi §cseljakotis.").toString());
                                 }
                             } else {
                                 pb.setType(Material.AIR);
@@ -341,11 +341,11 @@ public class ListenerClass implements Listener {
                                 } catch (Exception e1) {
                                     System.out.println("[ProtectionStones] WorldGuard Error [" + e1 + "] during Region File Save");
                                 }
-                                player.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("This area is no longer protected.").toString());
+                                player.sendMessage((new StringBuilder()).append().append("See §cala§f pole enam §ckaitstud.").toString());
                             }
                             e.setCancelled(true);
                         } else {
-                            player.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("You are not the owner of this region.").toString());
+                            player.sendMessage((new StringBuilder()).append().append("Sa ei ole selle §cala omanik.").toString());
                             e.setCancelled(true);
                         }
                     } else if (StoneTypeData.SilkTouch(blocktypedata)) {
