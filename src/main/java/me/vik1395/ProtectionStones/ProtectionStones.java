@@ -341,15 +341,15 @@ public class ProtectionStones extends JavaPlugin {
                         return ArgInfo.argumentInfo(p, args, currentPSID);
                     case "reload": {
                         Messages.reload();
-                        p.sendMessage(Messages.getMessage("messages-reloaded", "&c&l> &fMessages reloaded"));
+                        p.sendMessage(Messages.getMessage("messages-reloaded", "&c&l> &fSõnumid taaslaetud"));
                         break;
                     }
                     default:
-                        p.sendMessage(ChatColor.RED + "No such command. please type /ps help for more info");
+                        p.sendMessage(Messages.getMessage("no-such-command", "&c&l> &fTundmatu käsk, kasuta &c/ps help"));
                 }
             }
         } else {
-            s.sendMessage(ChatColor.RED + "PS cannot be used from the console.");
+            s.sendMessage(Messages.getMessage("players-only", "&c&l> &fProtectionStones ei saa konsoolis kasutada"));
         }
         return true;
     }

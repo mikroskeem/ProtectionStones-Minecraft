@@ -1,1 +1,3 @@
-messages-reloaded: "&c&l> &fMessages reloaded"
+messages-reloaded: "&c&l> &fSõnumid taaslaetud"
+no-such-command: "&c&l> &fTundmatu käsk, kasuta &c/ps help"
+players-only: "&c&l> &fProtectionStones ei saa konsoolis kasutada"
