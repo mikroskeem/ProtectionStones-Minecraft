@@ -23,6 +23,7 @@ import com.sk89q.worldguard.WorldGuard;
 import com.sk89q.worldguard.domains.DefaultDomain;
 import com.sk89q.worldguard.protection.managers.RegionManager;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
+import eu.mikroskeem.ps.Messages;
 import me.vik1395.ProtectionStones.commands.*;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.*;
@@ -117,6 +118,7 @@ public class ProtectionStones extends JavaPlugin {
         plugin = this;
         conf = new File(this.getDataFolder() + "/config.yml");
         psStoneData = new File(this.getDataFolder() + "/hiddenpstones.yml");
+        Messages.initialize(this);
 
         // Metrics (bStats)
         metrics = new Metrics(this);
@@ -260,6 +262,7 @@ public class ProtectionStones extends JavaPlugin {
                     p.sendMessage(ChatColor.YELLOW + "/ps admin { version | settings | hide | unhide |");//\\
                     p.sendMessage(ChatColor.YELLOW + "           cleanup | lastlogon | lastlogons | stats }");//\\
                     p.sendMessage(ChatColor.YELLOW + "/ps bypass");//\\
+                    p.sendMessage(ChatColor.YELLOW + "/ps reload");//\\
                     return true;
                 }
 
@@ -336,6 +339,11 @@ public class ProtectionStones extends JavaPlugin {
                         return ArgFlag.argumentFlag(p, args, currentPSID);
                     case "info":
                         return ArgInfo.argumentInfo(p, args, currentPSID);
+                    case "reload": {
+                        Messages.reload();
+                        p.sendMessage(Messages.getMessage("messages-reloaded", "&c&l> &fMessages reloaded"));
+                        break;
+                    }
                     default:
                         p.sendMessage(ChatColor.RED + "No such command. please type /ps help for more info");
                 }
