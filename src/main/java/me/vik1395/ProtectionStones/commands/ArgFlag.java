@@ -29,22 +29,22 @@ public class ArgFlag {
         RegionManager rgm = ProtectionStones.getRegionManagerWithPlayer(p);
 
         if (!p.hasPermission("protectionstones.flags")) {
-            p.sendMessage(ChatColor.RED + "You don't have permission to use flag commands");
+            p.sendMessage(Messages.getMessage("no-permission", ""));
             return true;
         }
         if (ProtectionStones.hasNoAccess(rgm.getRegion(psID), p, wg.wrapPlayer(p), false)) {
-            p.sendMessage(ChatColor.RED + "You are not allowed to do that here.");
+            p.sendMessage(Messages.getMessage("not-allowed-to-do", ""));
             return true;
         }
 
         if (args.length < 3) {
-            p.sendMessage(ChatColor.RED + "Use:  /ps flag {flagname} {flagvalue}");
+            p.sendMessage(Messages.getMessage("ps-flag-usage", ""));
         } else {
             if (ProtectionStones.allowedFlags.contains(args[1].toLowerCase()) || p.hasPermission("protectionstones.flag." + args[1].toLowerCase()) || p.hasPermission("protectionstones.flag.*")) {
                 FlagHandler fh = new FlagHandler();
                 fh.setFlag(args, rgm.getRegion(psID), p);
             } else {
-                p.sendMessage(ChatColor.RED + "You don't have permission to set that flag");
+                p.sendMessage(Messages.getMessage("no-flag-permission", ""));
             }
         }
         return true;

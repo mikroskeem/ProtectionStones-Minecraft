@@ -41,24 +41,24 @@ public class ArgCount {
                 count = countRegionsOfPlayer(wg.wrapPlayer(p), rgm);
                 p.sendMessage(ChatColor.YELLOW + "Your region count in this world: " + count);
             } else {
-                p.sendMessage(ChatColor.RED + "You do not have permission to use this command!");
+                p.sendMessage(Messages.getMessage("no-permission", ""));
             }
             return true;
         } else if (args.length == 2) {
             if (p.hasPermission("protectionstones.count.others")) {
                 OfflinePlayer op = Bukkit.getOfflinePlayer(args[1]);
                 if (op == null || !op.hasPlayedBefore()) {
-                    p.sendMessage(ChatColor.YELLOW + "Cannot find this player!");
+                    p.sendMessage(Messages.getMessage("invalid-player", "").replaceAll(Pattern.quote("{player}"), args[1]));
                     return true;
                 }
                 count = countRegionsOfPlayer(wg.wrapOfflinePlayer(op), rgm);
-                p.sendMessage(ChatColor.YELLOW + args[1] + "'s region count: " + count);
+                p.sendMessage(Messages.getMessage("player-region-count", "").replaceAll(Pattern.quote("{player}"), args[1]).replaceAll(Pattern.quote("{count}"), count));
             } else {
-                p.sendMessage(ChatColor.RED + "You do not have permission to use this command!");
+                p.sendMessage(Messages.getMessage("no-permission", ""));
             }
             return true;
         } else {
-            p.sendMessage(ChatColor.RED + "Usage: /ps count, /ps count [player]");
+            p.sendMessage(Messages.getMessage("ps-count-usage", ""));
             return true;
         }
     }
