@@ -1,5 +1,18 @@
-/target/classes/
-/target/maven-archiver/
-/target/maven-status/
-/.idea/
-/bin/
+# JVM crash related
+core.*
+hs_err_pid*
+
+# IntelliJ IDEA
+*.iml
+.idea/
+out/
+
+# Maven
+target/
+dependency-reduced-pom.xml
+
+# Gradle
+!gradle-wrapper.jar
+.gradle/
+build/
+*/build/

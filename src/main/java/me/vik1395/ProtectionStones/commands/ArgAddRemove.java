@@ -27,24 +27,24 @@ import org.bukkit.entity.Player;
 public class ArgAddRemove {
     private static OfflinePlayer checks(Player p, String args[], String psID, RegionManager rgm, WorldGuardPlugin wg, String permType, boolean checkPlayer) {
         if (permType.equals("members") && !p.hasPermission("protectionstones.members")) {
-            p.sendMessage("Sul pole §cluba§f kasutada Ala memberi §ckäsklusi");
+            p.sendMessage(Messages.getMessage("no-permission", ""));
             return null;
         } else if (permType.equals("owners") && !p.hasPermission("protectionstones.owners")) {
-            p.sendMessage("Sul pole §cluba§f kasutada Ala omaniku §ckäsklusi");
+            p.sendMessage(Messages.getMessage("no-permission", ""));
             return null;
         } else if (ProtectionStones.hasNoAccess(rgm.getRegion(psID), p, wg.wrapPlayer(p), false)) {
-            p.sendMessage("Sa ei tohi §ckasutada§f seda siin.");
+            p.sendMessage(Messages.getMessage("not-allowed-to-use", ""));
             return null;
         } else if (args.length < 2) {
-            p.sendMessage("See §ckäsklus§f vajab §cmängijanime.");
+            p.sendMessage(Messages.getMessage("player-required", ""));
             return null;
         } else if (psID.equals("")) {
-            p.sendMessage("Sa ei ole §cplokki kaitsealas.");
+            p.sendMessage(Messages.getMessage("not-in-claim", ""));
             return null;
         }
         OfflinePlayer op = Bukkit.getOfflinePlayer(args[1]);
         if ((op == null || !op.hasPlayedBefore()) && checkPlayer) {
-            p.sendMessage("§cMängijat§f ei leitud. Olete kindel, et ta on §cliitunud§f selle serveriga ennem?");
+            p.sendMessage(Messages.getMessage("player-not-found-db", "").replaceAll(Pattern.quote("{player}"), args[1]));
             return null;
         }
         return op;
@@ -86,9 +86,9 @@ public class ArgAddRemove {
         }
 
         if (type.equals("add") || type.equals("addowner")) {
-            p.sendMessage(op.getName() + " on lisatud sinu §ckaitsealale.");
+            p.sendMessage(Messages.getMessage("added-to-protection", "").replaceAll(Pattern.quote("{player}"), op.getName()));
         } else if (type.equals("remove") || type.equals("removeowner")) {
-            p.sendMessage(op.getName() + " on eemaldatud sinu §ckaitsealast.");
+            p.sendMessage(Messages.getMessage("removed-from-protection", "").replaceAll(Pattern.quote("{player}"), op.getName()));
         }
         return true;
     }
