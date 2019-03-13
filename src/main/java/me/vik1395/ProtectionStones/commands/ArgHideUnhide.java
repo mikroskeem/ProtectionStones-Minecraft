@@ -21,12 +21,10 @@ import com.sk89q.worldguard.protection.managers.RegionManager;
 import eu.mikroskeem.ps.Messages;
 import me.vik1395.ProtectionStones.PSLocation;
 import me.vik1395.ProtectionStones.ProtectionStones;
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
-import sun.plugin2.message.Message;
 
 import java.io.IOException;
 import java.util.logging.Level;

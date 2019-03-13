@@ -329,9 +329,9 @@ public class ListenerClass implements Listener {
                                     } catch (Exception e1) {
                                         System.out.println("[ProtectionStones] WorldGuard Error [" + e1 + "] during Region File Save");
                                     }
-                                    player.sendMessage((new StringBuilder()).append().append("See §cala§f pole enam §ckaitstud.").toString());
+                                    player.sendMessage((new StringBuilder().append("See §cala§f pole enam §ckaitstud.").toString()));
                                 } else {
-                                    player.sendMessage((new StringBuilder()).append().append("Sul pole §cküllalt§f ruumi §cseljakotis.").toString());
+                                    player.sendMessage((new StringBuilder().append("Sul pole §cküllalt§f ruumi §cseljakotis.").toString()));
                                 }
                             } else {
                                 pb.setType(Material.AIR);
@@ -341,11 +341,11 @@ public class ListenerClass implements Listener {
                                 } catch (Exception e1) {
                                     System.out.println("[ProtectionStones] WorldGuard Error [" + e1 + "] during Region File Save");
                                 }
-                                player.sendMessage((new StringBuilder()).append().append("See §cala§f pole enam §ckaitstud.").toString());
+                                player.sendMessage((new StringBuilder()).append("See §cala§f pole enam §ckaitstud.").toString());
                             }
                             e.setCancelled(true);
                         } else {
-                            player.sendMessage((new StringBuilder()).append().append("Sa ei ole selle §cala omanik.").toString());
+                            player.sendMessage((new StringBuilder()).append("Sa ei ole selle §cala omanik.").toString());
                             e.setCancelled(true);
                         }
                     } else if (StoneTypeData.SilkTouch(blocktypedata)) {
