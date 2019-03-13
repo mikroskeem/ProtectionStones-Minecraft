@@ -18,6 +18,7 @@ package me.vik1395.ProtectionStones.commands;
 
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import com.sk89q.worldguard.protection.managers.RegionManager;
+import eu.mikroskeem.ps.Messages;
 import me.vik1395.ProtectionStones.PSLocation;
 import me.vik1395.ProtectionStones.ProtectionStones;
 import org.bukkit.ChatColor;
@@ -25,6 +26,7 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
+import sun.plugin2.message.Message;
 
 import java.io.IOException;
 import java.util.logging.Level;
@@ -37,19 +39,19 @@ public class ArgHideUnhide {
 
         // preliminary checks
         if (arg.equals("unhide") && !p.hasPermission("protectionstones.unhide")) {
-            p.sendMessage("Sul pole §cluba§f kasutada seda käsklust.");
+            p.sendMessage(Messages.getMessage("no-permission", ""));
             return true;
         }
         if (arg.equals("hide") && !p.hasPermission("protectionstones.hide")) {
-            p.sendMessage("Sul pole §cluba§f kasutada seda käsklust.");
+            p.sendMessage(Messages.getMessage("no-permission", ""));
             return true;
         }
         if (ProtectionStones.hasNoAccess(rgm.getRegion(psID), p, wg.wrapPlayer(p), false)) {
-            p.sendMessage("Sul pole §cluba§f kasutada seda siin.");
+            p.sendMessage(Messages.getMessage("not-allowed-to-use", ""));
             return true;
         }
         if (!psID.substring(0, 2).equals("ps")) {
-            p.sendMessage("See ei ole §cProtectionStones§f alakaitse!");
+            p.sendMessage(Messages.getMessage("not-in-protection", ""));
             return true;
         }
         PSLocation psl = ProtectionStones.parsePSRegionToLocation(psID);
@@ -63,7 +65,7 @@ public class ArgHideUnhide {
 
         if (ProtectionStones.mats.contains(currentType.toString())) {
             if (arg.equals("unhide")) {
-                p.sendMessage("See §cplokk§f ei tundu olevat §cpeidetud...");
+                p.sendMessage(Messages.getMessage("not-hidden-block", ""));
                 return true;
             }
             if (!hideFile.contains(entry)) {
@@ -75,11 +77,11 @@ public class ArgHideUnhide {
                 }
                 blockToEdit.setType(Material.AIR);
             } else {
-                p.sendMessage("See §cplokk§f tundub olevat juba §cpeidetud...");
+                p.sendMessage(Messages.getMessage("already-hidden-block", ""));
             }
         } else {
             if (arg.equals("hide")) {
-                p.sendMessage("See §cplokk§f tundub olevat juba §cpeidetud...");
+                p.sendMessage(Messages.getMessage("already-hidden-block", ""));
                 return true;
             }
 
@@ -100,7 +102,7 @@ public class ArgHideUnhide {
                     //TODO removed subtype support blockToUnhide.setData((byte) (Integer.parseInt(subtype)));
                 }
             } else {
-                p.sendMessage("See §cplokk§f ei tundu olevat §cpeidetud...");
+                p.sendMessage(Messages.getMessage("not-hidden-block", ""));
             }
         }
         return true;
