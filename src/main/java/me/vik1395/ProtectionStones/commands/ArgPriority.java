@@ -18,10 +18,13 @@ package me.vik1395.ProtectionStones.commands;
 
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import com.sk89q.worldguard.protection.managers.RegionManager;
+import eu.mikroskeem.ps.Messages;
 import me.vik1395.ProtectionStones.ProtectionStones;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
+
+import java.util.regex.Pattern;
 
 public class ArgPriority {
     public static boolean argPriority(Player p, String[] args, String psID) {
@@ -29,16 +32,16 @@ public class ArgPriority {
         RegionManager rgm = ProtectionStones.getRegionManagerWithPlayer(p);
 
         if (!p.hasPermission("protectionstones.priority")) {
-            p.sendMessage(ChatColor.RED + "You don't have permission to use Priority Commands");
+            p.sendMessage(Messages.getMessage("no-permission", ""));
             return true;
         }
         if (ProtectionStones.hasNoAccess(rgm.getRegion(psID), p, wg.wrapPlayer(p), false)) {
-            p.sendMessage(ChatColor.RED + "You are not allowed to do that here.");
+            p.sendMessage(Messages.getMessage("not-allowed-to-do", ""));
             return true;
         }
         if (args.length < 2) {
             int priority = rgm.getRegion(psID).getPriority();
-            p.sendMessage(ChatColor.YELLOW + "Priority: " + priority);
+            p.sendMessage(Messages.getMessage("priority-info", "").replaceAll(Pattern.quote("{priority}"), "" + priority));
             return true;
         }
 
@@ -48,11 +51,11 @@ public class ArgPriority {
             try {
                 rgm.save();
             } catch (Exception e) {
-                Bukkit.getLogger().severe("[ProtectionStones] WorldGuard Error [" + e + "] during Region File Save");
+                Bukkit.getLogger().severe(Messages.getMessage("worldguard-error", "").replaceAll(Pattern.quote("{error}"), "" + e));
             }
-            p.sendMessage(ChatColor.YELLOW + "Priority has been set.");
+            p.sendMessage(Messages.getMessage("priority-set", ""));
         } catch (Exception e) {
-            p.sendMessage("Error parsing input, check it again?");
+            p.sendMessage(Messages.getMessage("parse-error", ""));
         }
         return true;
     }

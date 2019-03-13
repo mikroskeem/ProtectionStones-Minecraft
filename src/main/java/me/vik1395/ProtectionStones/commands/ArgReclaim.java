@@ -20,6 +20,7 @@ import com.sk89q.worldedit.math.BlockVector3;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import com.sk89q.worldguard.protection.managers.RegionManager;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
+import eu.mikroskeem.ps.Messages;
 import me.vik1395.ProtectionStones.PSLocation;
 import me.vik1395.ProtectionStones.ProtectionStones;
 import org.bukkit.Bukkit;
@@ -37,6 +38,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Pattern;
 
 public class ArgReclaim {
     // /ps reclaim
@@ -44,21 +46,21 @@ public class ArgReclaim {
         WorldGuardPlugin wg = (WorldGuardPlugin) ProtectionStones.wgd;
         RegionManager rgm = ProtectionStones.getRegionManagerWithPlayer(p);
         if (!p.hasPermission("protectionstones.reclaim")) {
-            p.sendMessage(ChatColor.RED + "You don't have permission to use the Reclaim Command");
+            p.sendMessage(Messages.getMessage("no-permission", ""));
             return true;
         }
         if (psID.equals("")) {
-            p.sendMessage(ChatColor.RED + "You are not in a protection stone region!");
+            p.sendMessage(Messages.getMessage("not-in-protection", ""));
             return true;
         }
         ProtectedRegion region = rgm.getRegion(psID);
 
         if (region == null) {
-            p.sendMessage(ChatColor.YELLOW + "You are currently not in a region.");
+            p.sendMessage(Messages.getMessage("not-in-protection", ""));
             return true;
         }
         if (!psID.substring(0, 2).equals("ps")) {
-            p.sendMessage(ChatColor.YELLOW + "You are currently not in a protection stones region.");
+            p.sendMessage(Messages.getMessage("not-in-protection", ""));
             return true;
         }
 
@@ -114,7 +116,7 @@ public class ArgReclaim {
 
 
         if (!region.isOwner(wg.wrapPlayer(p)) && !p.hasPermission("protectionstones.superowner")) {
-            p.sendMessage(ChatColor.YELLOW + "You are not the owner of this region.");
+            p.sendMessage(Messages.getMessage("not-owner", ""));
             return true;
         }
 
@@ -149,7 +151,7 @@ public class ArgReclaim {
                 PlayerInventory inventory = p.getInventory();
                 inventory.addItem(oreblock);
             } else {
-                p.sendMessage(ChatColor.RED + "You don't have enough room in your inventory.");
+                p.sendMessage(Messages.getMessage("inventory-full", ""));
                 return true;
             }
         }
@@ -160,9 +162,9 @@ public class ArgReclaim {
         try {
             rgm.save();
         } catch (Exception e1) {
-            Bukkit.getLogger().severe("[ProtectionStones] WorldGuard Error [" + e1 + "] during Region File Save");
+            Bukkit.getLogger().severe(Messages.getMessage("worldguard-error", "").replaceAll(Pattern.quote("{error}"), "" + e1));
         }
-        p.sendMessage(ChatColor.YELLOW + "This area is no longer protected.");
+        p.sendMessage(Messages.getMessage("no-longer-protected", ""));
 
         return true;
     }

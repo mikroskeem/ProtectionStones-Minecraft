@@ -109,7 +109,7 @@ public class ArgInfo {
         String myFlagValue;
         for (Flag<?> flag : WorldGuard.getInstance().getFlagRegistry().getAll()) {
             if (region.getFlag(flag) != null) {
-                myFlagValue = region.getFlag(flag).toString();
+                myFlagValue = ChatColor.RESET + region.getFlag(flag).toString() + ChatColor.RED;
                 RegionGroupFlag groupFlag = flag.getRegionGroupFlag();
 
                 if (region.getFlag(groupFlag) != null) {

@@ -19,6 +19,7 @@ package me.vik1395.ProtectionStones.commands;
 import com.sk89q.worldguard.LocalPlayer;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import com.sk89q.worldguard.protection.managers.RegionManager;
+import eu.mikroskeem.ps.Messages;
 import me.vik1395.ProtectionStones.ProtectionStones;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -41,27 +42,27 @@ public class ArgTp {
         // preliminary checks
         if (args[0].equalsIgnoreCase("tp")) { // argument tp
             if (!p.hasPermission("protectionstones.tp")) {
-                p.sendMessage(ChatColor.RED + "You do not have permission to execute this command!");
+                p.sendMessage(Messages.getMessage("no-permission", ""));
                 return true;
             } else if (args.length != 3) {
-                p.sendMessage(ChatColor.RED + "Usage: /ps tp [player] [num]");
+                p.sendMessage(Messages.getMessage("ps-tp-usage", ""));
                 return true;
             }
             rgnum = Integer.parseInt(args[2]);
         } else { // argument home
             if (!p.hasPermission("protectionstones.home")) {
-                p.sendMessage(ChatColor.RED + "You do not have permission to execute this command!");
+                p.sendMessage(Messages.getMessage("no-permission", ""));
                 return true;
             } else if (args.length != 2) {
-                p.sendMessage(ChatColor.RED + "Usage: /ps home [num]");
-                p.sendMessage(ChatColor.YELLOW + "To see your ps count, type /ps count. Use any number within the range to teleport to that ps");
+                p.sendMessage(Messages.getMessage("ps-home-usage", ""));
+                p.sendMessage(Messages.getMessage("ps-count-usage", ""));
                 return true;
             }
             rgnum = Integer.parseInt(args[1]);
         }
 
         if (rgnum <= 0) {
-            p.sendMessage(ChatColor.RED + "Please enter a number above 0.");
+            p.sendMessage(Messages.getMessage("number-above-zero", ""));
             return true;
         }
 

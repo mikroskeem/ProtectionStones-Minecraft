@@ -20,6 +20,7 @@ import com.sk89q.worldguard.LocalPlayer;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import com.sk89q.worldguard.protection.managers.RegionManager;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
+import eu.mikroskeem.ps.Messages;
 import me.vik1395.ProtectionStones.ProtectionStones;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -28,6 +29,7 @@ import org.bukkit.entity.Player;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 public class ArgRegion {
 
@@ -37,12 +39,12 @@ public class ArgRegion {
         RegionManager rgm = ProtectionStones.getRegionManagerWithPlayer(p);
 
         if (!p.hasPermission("protectionstones.region")) {
-            p.sendMessage("Sul pole §cluba§f kasutada §cadmin§f alakaitse käsklusi.");
+            p.sendMessage(Messages.getMessage("no-permission", ""));
             return true;
         }
 
         if (args.length < 3) {
-            p.sendMessage(ChatColor.YELLOW + "/ps region {count|list|remove|regen|disown} {playername}");
+            p.sendMessage(Messages.getMessage("ps-region-usage", ""));
             return true;
         }
 
@@ -50,7 +52,7 @@ public class ArgRegion {
 
         if (args[1].equalsIgnoreCase("count")) { // count player's regions
             int count = ArgCount.countRegionsOfPlayer(lp, rgm); // TODO check if rgm needs to be p2's
-            p.sendMessage(ChatColor.YELLOW + args[2] + "'s region count: " + count);
+            p.sendMessage(Messages.getMessage("player-region-count", "").replaceAll(Pattern.quote("{player}"), args[2]).replaceAll(Pattern.quote("{count}"), "" + count));
 
         } else if (args[1].equalsIgnoreCase("list")) { // list player's regions
             StringBuilder regionMessage = new StringBuilder();
@@ -63,10 +65,10 @@ public class ArgRegion {
             }
 
             if (!found) {
-                p.sendMessage(ChatColor.YELLOW + "No regions found for " + args[2] + " in this world.");
+                p.sendMessage(Messages.getMessage("player-no-region", "").replaceAll(Pattern.quote("{player}"), args[2]));
             } else {
                 regionMessage = new StringBuilder(regionMessage.substring(0, regionMessage.length() - 2) + ".");
-                p.sendMessage(ChatColor.YELLOW + args[2] + "'s regions in this world: " + regionMessage);
+                p.sendMessage(Messages.getMessage("player-regions", "").replaceAll(Pattern.quote("{player}"), args[2]).replaceAll(Pattern.quote("{regions}"), "" + regionMessage));
             }
 
         } else if ((args[1].equalsIgnoreCase("remove")) || (args[1].equalsIgnoreCase("regen")) || (args[1].equalsIgnoreCase("disown"))) {
@@ -82,18 +84,18 @@ public class ArgRegion {
                 }
             }
             if (index == 0) {
-                p.sendMessage(ChatColor.YELLOW + "No regions found for " + args[2] + " in this world.");
+                p.sendMessage(Messages.getMessage("player-no-regions", "").replaceAll(Pattern.quote("{player}"), args[2]));
             } else {
 
                 // Remove regions
                 for (String s : regionIDList)
                     ProtectionStones.removeDisownRegenPSRegion(lp, args[1].toLowerCase(), s, rgm, p);
 
-                p.sendMessage(ChatColor.YELLOW + args[2] + "'s regions have been removed in this world.");
+                p.sendMessage(Messages.getMessage("player-regions-removed", "").replaceAll(Pattern.quote("{player}"), args[2]));
                 try {
                     rgm.save();
                 } catch (Exception e) {
-                    System.out.println("[ProtectionStones] WorldGuard Error [" + e + "] during Region File Save");
+                    System.out.println(Messages.getMessage("worldguard-error", "").replaceAll(Pattern.quote("{error}"), "" + e));
                 }
             }
         }
