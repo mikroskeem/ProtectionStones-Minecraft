@@ -20,6 +20,7 @@ import com.sk89q.worldguard.LocalPlayer;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import com.sk89q.worldguard.protection.managers.RegionManager;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
+import eu.mikroskeem.ps.Messages;
 import me.vik1395.ProtectionStones.ProtectionStones;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -27,6 +28,7 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
 import java.util.Map;
+import java.util.regex.Pattern;
 
 public class ArgCount {
 
@@ -52,7 +54,7 @@ public class ArgCount {
                     return true;
                 }
                 count = countRegionsOfPlayer(wg.wrapOfflinePlayer(op), rgm);
-                p.sendMessage(Messages.getMessage("player-region-count", "").replaceAll(Pattern.quote("{player}"), args[1]).replaceAll(Pattern.quote("{count}"), count));
+                p.sendMessage(Messages.getMessage("player-region-count", "").replaceAll(Pattern.quote("{player}"), args[1]).replaceAll(Pattern.quote("{count}"), "" + count));
             } else {
                 p.sendMessage(Messages.getMessage("no-permission", ""));
             }

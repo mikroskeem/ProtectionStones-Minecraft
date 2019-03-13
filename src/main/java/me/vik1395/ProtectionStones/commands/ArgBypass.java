@@ -16,6 +16,7 @@
 
 package me.vik1395.ProtectionStones.commands;
 
+import eu.mikroskeem.ps.Messages;
 import me.vik1395.ProtectionStones.ProtectionStones;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -24,6 +25,7 @@ import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.metadata.MetadataValue;
 
 import java.util.List;
+import java.util.regex.Pattern;
 
 public class ArgBypass {
 
@@ -59,7 +61,7 @@ public class ArgBypass {
 
         // TODO this command doesn't look finished, since there is no logic for using it...
 
-        p.sendMessage(Messages.getMessage("pvp-teleport-bypass", "").replaceAll(Pattern.quote("{status}"), bool).replaceAll(Pattern.quote("{player}"), p.getName()));
+        p.sendMessage(Messages.getMessage("pvp-teleport-bypass", "").replaceAll(Pattern.quote("{status}"), "" + bool).replaceAll(Pattern.quote("{player}"), p.getName()));
         return true;
     }
 }
