@@ -59,9 +59,8 @@ public class ArgInfo {
                 return true;
             }
 
-            p.sendMessage(ChatColor.GRAY + "================ PS Info ================");
-            p.sendMessage(ChatColor.BLUE + "Region:" + ChatColor.YELLOW + psID + ChatColor.BLUE + ", Priority: " + ChatColor.YELLOW + rgm.getRegion(psID).getPriority());
-
+            p.sendMessage(Messages.getMessage("info-title", ""));
+            p.sendMessage(Messages.getMessage("region-priority-info", "").replaceAll(Pattern.quote("{region}"), psID).replaceAll(Pattern.quote("{priority}"), "" + rgm.getRegion(psID).getPriority()));
 
             displayFlags(p, region);
             displayOwners(p, region);
@@ -69,7 +68,7 @@ public class ArgInfo {
 
             BlockVector3 min = region.getMinimumPoint();
             BlockVector3 max = region.getMaximumPoint();
-            p.sendMessage(ChatColor.BLUE + "Bounds: " + ChatColor.YELLOW + "(" + min.getBlockX() + "," + min.getBlockY() + "," + min.getBlockZ() + ") -> (" + max.getBlockX() + "," + max.getBlockY() + "," + max.getBlockZ() + ")");
+            p.sendMessage(Messages.getMessage("region-bounds-info", "").replaceAll(Pattern.quote("{bounds}"), "(" + min.getBlockX() + "," + min.getBlockY() + "," + min.getBlockZ() + ") -> (" + max.getBlockX() + "," + max.getBlockY() + "," + max.getBlockZ() + ")"));
 
         } else if (args.length == 2) { // get specific information on current region
 
@@ -123,15 +122,15 @@ public class ArgInfo {
 
         if (myFlag.length() > 2) {
             myFlag = new StringBuilder(myFlag.substring(0, myFlag.length() - 2) + ".");
-            p.sendMessage(Messages.getMessage("flags", "").replaceAll(Pattern.quote("{flags}"), "" + myFlag));
+            p.sendMessage(Messages.getMessage("region-flags-info", "").replaceAll(Pattern.quote("{flags}"), "" + myFlag));
         } else {
-            p.sendMessage(Messages.getMessage("no-flags",""));
+            p.sendMessage(Messages.getMessage("region-no-flags",""));
         }
     }
 
     private static void displayOwners(Player p, ProtectedRegion region) {
         DefaultDomain owners = region.getOwners();
-        StringBuilder send = new StringBuilder(Messages.getMessage("owners", ""));
+        StringBuilder send = new StringBuilder(Messages.getMessage("region-owners-info", ""));
         if (owners.size() == 0) {
             send.append(Messages.getMessage("none", ""));
             p.sendMessage(send.toString());
@@ -151,7 +150,7 @@ public class ArgInfo {
 
     private static void displayMembers(Player p, ProtectedRegion region) {
         DefaultDomain members = region.getMembers();
-        StringBuilder send = new StringBuilder(Messages.getMessage("members", ""));
+        StringBuilder send = new StringBuilder(Messages.getMessage("region-members-info", ""));
         if (members.size() == 0) {
             send.append(Messages.getMessage("none", ""));
             p.sendMessage(send.toString());

@@ -20,15 +20,11 @@ not-in-protection: "&cProtection &8| &fSee ei ole ProtectionStones alakaitse!"
 not-hidden-block: "&cProtection &8| &fSee plokk ei tundu olevat peidetud..."
 already-hidden-block: "&cProtection &8| &fSee plokk tundub olevat juba peidetud..."
 unknown-region: "&cProtection &8| &fSellist regioni ei leitud."
+info-title: "&f&l           Protection Info"
+region-priority-info: "&fRegion: &c{region}&f, Priority: &c{priority}"
+region-flags-info: "&fFlags: &c{flags}"
+region-no-flags: "&fFlags: &cnone"
+region-owners-info: "&fOwners: "
+region-members-info: "&fMembers: "
+region-bounds-info: "&fBounds: &c{bounds}"
 none: "&cnone"
-no-flags: "&fFlags: &cnone"
-flags: "&fFlags: &c{flags}"
-owners: "&fOwners: "
-members: "&fMembers: "
-protection-info: |-
-  &r        &f&lProtection Information
-  &f Region: &c{region}&f, Priority: &c{priority}
-  &f Bounds: &c{bounds}
-  &f Flags: &c{flags}
-  &f Members: &c{members}
-  &f Owners: &c{owners}
