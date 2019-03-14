@@ -41,19 +41,19 @@ public class Config {
         } catch (IOException | InvalidConfigurationException ex) {
             Logger.getLogger(ProtectionStones.class.getName()).log(Level.SEVERE, null, ex);
         }
-        System.out.print("[ProtectionStones] Checking Configuration Version");
+        ProtectionStones.getPlugin().getLogger().info("Checking Configuration Version");
         if (ProtectionStones.getPlugin().getConfig().get("ConfVer") == null) {
-            System.out.print("Config is outdated, this WILL generate errors, please refresh it!");
+            ProtectionStones.getPlugin().getLogger().info("Config is outdated, this WILL generate errors, please refresh it!");
         } else {
             if (ProtectionStones.config.getInt("ConfVer") == 1) {
-                System.out.print("Config is correct version, continuing start-up");
+                ProtectionStones.getPlugin().getLogger().info("Config is correct version, continuing start-up");
                 return true;
             } else if (ProtectionStones.config.getInt("ConfVer") > 1) {
-                System.out.print("Config version is higher than required version, this might cause trouble");
+                ProtectionStones.getPlugin().getLogger().info("Config version is higher than required version, this might cause trouble");
                 return true;
             } else {
                 fixInitialHidden(ProtectionStones.config.get("Block"));
-                System.out.print("Config is outdated, this WILL generate errors, please refresh it!");
+                ProtectionStones.getPlugin().getLogger().info("Config is outdated, this WILL generate errors, please refresh it!");
                 return true;
             }
         }
@@ -62,7 +62,7 @@ public class Config {
 
     private static void fixInitialHidden(Object block) {
         YamlConfiguration hideFile = YamlConfiguration.loadConfiguration(ProtectionStones.psStoneData);
-        System.out.print("Patching initial hiddenpstones.yml");
+        ProtectionStones.getPlugin().getLogger().info("Patching initial hiddenpstones.yml");
         for (World world : Bukkit.getWorlds()) {
             RegionManager rgm = WorldGuard.getInstance().getPlatform().getRegionContainer().get(BukkitAdapter.adapt(world));
             Map<String, ProtectedRegion> regions = rgm.getRegions();

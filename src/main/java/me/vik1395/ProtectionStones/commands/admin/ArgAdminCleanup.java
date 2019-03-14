@@ -91,7 +91,7 @@ public class ArgAdminCleanup {
             try {
                 rgm.save();
             } catch (Exception e) {
-                System.out.println("[ProtectionStones] WorldGuard Error [" + e + "] during Region File Save");
+                ProtectionStones.getPlugin().getLogger().info("WorldGuard Error [" + e + "] during Region File Save");
             }
             p.sendMessage(ChatColor.YELLOW + "================");
             p.sendMessage(ChatColor.YELLOW + "Completed " + args[2] + " cleanup");

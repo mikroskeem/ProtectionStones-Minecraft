@@ -95,7 +95,7 @@ public class ArgRegion {
                 try {
                     rgm.save();
                 } catch (Exception e) {
-                    System.out.println(Messages.getMessage("worldguard-error", "").replaceAll(Pattern.quote("{error}"), "" + e));
+                    ProtectionStones.getPlugin().getLogger().info(Messages.getMessage("worldguard-error", "").replaceAll(Pattern.quote("{error}"), "" + e));
                 }
             }
         }

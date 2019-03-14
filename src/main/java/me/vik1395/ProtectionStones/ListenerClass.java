@@ -327,7 +327,7 @@ public class ListenerClass implements Listener {
                                     try {
                                         rgm.save();
                                     } catch (Exception e1) {
-                                        System.out.println("[ProtectionStones] WorldGuard Error [" + e1 + "] during Region File Save");
+                                        ProtectionStones.getPlugin().getLogger().info("WorldGuard Error [" + e1 + "] during Region File Save");
                                     }
                                     player.sendMessage((new StringBuilder().append("See §cala§f pole enam §ckaitstud.").toString()));
                                 } else {
@@ -339,7 +339,7 @@ public class ListenerClass implements Listener {
                                 try {
                                     rgm.save();
                                 } catch (Exception e1) {
-                                    System.out.println("[ProtectionStones] WorldGuard Error [" + e1 + "] during Region File Save");
+                                    ProtectionStones.getPlugin().getLogger().info("WorldGuard Error [" + e1 + "] during Region File Save");
                                 }
                                 player.sendMessage((new StringBuilder()).append("See §cala§f pole enam §ckaitstud.").toString());
                             }
