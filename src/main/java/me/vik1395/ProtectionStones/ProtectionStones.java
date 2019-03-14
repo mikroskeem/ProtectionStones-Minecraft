@@ -121,7 +121,7 @@ public class ProtectionStones extends JavaPlugin {
         Messages.initialize(this);
 
         // Metrics (bStats)
-        metrics = new Metrics(this);
+        metrics = null;//new Metrics(this);
 
         // generate protection stones stored blocks file
         if (!psStoneData.exists()) {
