@@ -162,7 +162,7 @@ public class ArgReclaim {
         try {
             rgm.save();
         } catch (Exception e1) {
-            Bukkit.getLogger().severe(Messages.getMessage("worldguard-error", "").replaceAll(Pattern.quote("{error}"), "" + e1));
+            ProtectionStones.getPlugin().getLogger().severe(Messages.getMessage("worldguard-error", "").replaceAll(Pattern.quote("{error}"), "" + e1));
         }
         p.sendMessage(Messages.getMessage("no-longer-protected", ""));
 

@@ -85,7 +85,7 @@ public class ArgAddRemove {
         try {
             rgm.save();
         } catch (Exception e) {
-            Bukkit.getLogger().severe("[ProtectionStones] WorldGuard Error [" + e + "] during Region File Save");
+            ProtectionStones.getPlugin().getLogger().severe("WorldGuard Error [" + e + "] during Region File Save");
         }
 
         if (type.equals("add") || type.equals("addowner")) {

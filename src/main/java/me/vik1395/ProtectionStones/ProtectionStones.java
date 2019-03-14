@@ -151,7 +151,7 @@ public class ProtectionStones extends JavaPlugin {
                 if (Material.getMaterial(split[0]) != null) {
                     mats.add(material.toUpperCase());
                 } else {
-                    Bukkit.getLogger().info("Unrecognized block: " + split[0] + ". Please make sure you have updated your block name for 1.13!");
+                    getLogger().info("Unrecognized block: " + split[0] + ". Please make sure you have updated your block name for 1.13!");
                 }
             } else {
                 mats.add(split[0].toUpperCase());
@@ -214,7 +214,7 @@ public class ProtectionStones extends JavaPlugin {
                 try {
                     rm.save();
                 } catch (Exception e) {
-                    Bukkit.getLogger().severe("[ProtectionStones] WorldGuard Error [" + e + "] during Region File Save");
+                    getLogger().severe("WorldGuard Error [" + e + "] during Region File Save");
                 }
             }
 

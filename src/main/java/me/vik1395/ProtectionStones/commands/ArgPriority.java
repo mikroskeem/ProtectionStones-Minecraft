@@ -51,7 +51,7 @@ public class ArgPriority {
             try {
                 rgm.save();
             } catch (Exception e) {
-                Bukkit.getLogger().severe(Messages.getMessage("worldguard-error", "").replaceAll(Pattern.quote("{error}"), "" + e));
+                ProtectionStones.getPlugin().getLogger().severe(Messages.getMessage("worldguard-error", "").replaceAll(Pattern.quote("{error}"), "" + e));
             }
             p.sendMessage(Messages.getMessage("priority-set", ""));
         } catch (Exception e) {
