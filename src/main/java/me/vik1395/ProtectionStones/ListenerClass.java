@@ -91,7 +91,7 @@ public class ListenerClass implements Listener {
             if (ProtectionStones.isCooldownEnable) {
                 double currentTime = System.currentTimeMillis();
                 if (this.lastProtectStonePlaced.containsKey(p)) {
-                    int cooldown = ProtectionStones.cooldown;
+                    double cooldown = ProtectionStones.cooldown;
                     double lastPlace = this.lastProtectStonePlaced.get(p);
                     if (lastPlace + cooldown > currentTime) {
                         e.setCancelled(true);
