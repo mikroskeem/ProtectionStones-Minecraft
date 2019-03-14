@@ -160,7 +160,7 @@ public class ProtectionStones extends JavaPlugin {
 
         flags = getConfig().getStringList("Flags");
         allowedFlags = Arrays.asList((getConfig().getString("Allowed Flags").toLowerCase()).split(","));
-        deniedWorlds = Arrays.asList((getConfig().getString("Worlds Denied").toLowerCase()).split(","));
+        deniedWorlds = getConfig().getStringList("Worlds Denied");
 
         Config.initConfig();
 
