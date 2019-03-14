@@ -96,7 +96,7 @@ public class ListenerClass implements Listener {
                     if (lastPlace + cooldown > currentTime) {
                         e.setCancelled(true);
                         if (ProtectionStones.cooldownMessage == null) return;
-                        String cooldownMessage = ProtectionStones.cooldownMessage.replace("%time%", String.format("%.1f", (cooldown / 1000) - ((currentTime - lastPlace) / 1000)));
+                        String cooldownMessage = ProtectionStones.cooldownMessage.replace("%time%", String.format("%.1f", cooldown / 1000 - (currentTime - lastPlace) / 1000));
                         p.sendMessage(ChatColor.translateAlternateColorCodes('&', cooldownMessage));
                         return;
                     }
@@ -299,7 +299,7 @@ public class ListenerClass implements Listener {
             String psx = Double.toString(pb.getLocation().getX());
             String psy = Double.toString(pb.getLocation().getY());
             String psz = Double.toString(pb.getLocation().getZ());
-            String id = (new StringBuilder("ps")).append(psx, 0, psx.indexOf(".")).append("x").append(psy, 0, psy.indexOf(".")).append("y").append(psz, 0, psz.indexOf(".")).append("z").toString();
+            String id = "ps" + psx.substring(0, psx.indexOf(".")) + "x" + psy.substring(0, psy.indexOf(".")) + "y" + psz.substring(0, psz.indexOf(".")) + "z";
             if (wg.createProtectionQuery().testBlockBreak(player, pb)) {
                 if (player.hasPermission("protectionstones.destroy")) {
                     if (type == 2) {blocktypedata = pb.getType().toString();}
@@ -329,9 +329,9 @@ public class ListenerClass implements Listener {
                                     } catch (Exception e1) {
                                         ProtectionStones.getPlugin().getLogger().info("WorldGuard Error [" + e1 + "] during Region File Save");
                                     }
-                                    player.sendMessage((new StringBuilder().append("See §cala§f pole enam §ckaitstud.").toString()));
+                                    player.sendMessage("See §cala§f pole enam §ckaitstud.");
                                 } else {
-                                    player.sendMessage((new StringBuilder().append("Sul pole §cküllalt§f ruumi §cseljakotis.").toString()));
+                                    player.sendMessage("Sul pole §cküllalt§f ruumi §cseljakotis.");
                                 }
                             } else {
                                 pb.setType(Material.AIR);
@@ -341,11 +341,11 @@ public class ListenerClass implements Listener {
                                 } catch (Exception e1) {
                                     ProtectionStones.getPlugin().getLogger().info("WorldGuard Error [" + e1 + "] during Region File Save");
                                 }
-                                player.sendMessage((new StringBuilder()).append("See §cala§f pole enam §ckaitstud.").toString());
+                                player.sendMessage("See §cala§f pole enam §ckaitstud.");
                             }
                             e.setCancelled(true);
                         } else {
-                            player.sendMessage((new StringBuilder()).append("Sa ei ole selle §cala omanik.").toString());
+                            player.sendMessage("Sa ei ole selle §cala omanik.");
                             e.setCancelled(true);
                         }
                     } else if (StoneTypeData.SilkTouch(blocktypedata)) {
@@ -356,7 +356,7 @@ public class ListenerClass implements Listener {
                         Collection<ItemStack> baseDrops = null;
                         if (left.containsEnchantment(Enchantment.LOOT_BONUS_BLOCKS)) {
                             baseDrops = pb.getDrops(left);
-                            if (!(baseDrops.isEmpty())) {
+                            if (!baseDrops.isEmpty()) {
                                 int fortuneLevel = left.getEnchantmentLevel(Enchantment.LOOT_BONUS_BLOCKS);
                                 if (fortuneLevel > 5) fortuneLevel = 5;
                                 ItemStack stack = baseDrops.iterator().next();
@@ -367,7 +367,7 @@ public class ListenerClass implements Listener {
                             drops = baseDrops;
                         } else if (right.containsEnchantment(Enchantment.LOOT_BONUS_BLOCKS)) {
                             baseDrops = pb.getDrops(right);
-                            if (!(baseDrops.isEmpty())) {
+                            if (!baseDrops.isEmpty()) {
                                 int fortuneLevel = right.getEnchantmentLevel(Enchantment.LOOT_BONUS_BLOCKS);
                                 if (fortuneLevel > 5) fortuneLevel = 5;
                                 ItemStack stack = baseDrops.iterator().next();
@@ -511,7 +511,7 @@ public class ListenerClass implements Listener {
                 ApplicableRegionSet region = rgm.getApplicableRegions(v);
                 ApplicableRegionSet regionFrom = rgm.getApplicableRegions(v);
                 if (regionFrom != null) {
-                    if (!(regionFrom.testState(WorldGuardPlugin.inst().wrapPlayer(p), Flags.PVP))) {
+                    if (!regionFrom.testState(WorldGuardPlugin.inst().wrapPlayer(p), Flags.PVP)) {
                         if (region.testState(WorldGuardPlugin.inst().wrapPlayer(p), Flags.PVP)) {
                             p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&cWarning! &eThis area is a &cPVP &earea! You may &cdie &eand &close stuff&e!"));
                         }
