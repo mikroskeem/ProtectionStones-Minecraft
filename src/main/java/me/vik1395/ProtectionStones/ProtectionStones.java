@@ -46,7 +46,8 @@ import java.util.logging.Logger;
 public class ProtectionStones extends JavaPlugin {
     public static Map<UUID, String> uuidToName = new HashMap<>();
 
-    public static Plugin plugin, wgd;
+    public static ProtectionStones plugin;
+    public static Plugin wgd;
     public static File psStoneData;
     public static File conf;
 
@@ -67,7 +68,7 @@ public class ProtectionStones extends JavaPlugin {
     public static int cooldown = 0;
     public static String cooldownMessage = null;
 
-    public static Plugin getPlugin() {
+    public static ProtectionStones getPlugin() {
         return plugin;
     }
 
