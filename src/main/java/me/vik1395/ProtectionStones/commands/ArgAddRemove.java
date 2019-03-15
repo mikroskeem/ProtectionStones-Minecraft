@@ -30,24 +30,25 @@ import java.util.regex.Pattern;
 public class ArgAddRemove {
     private static OfflinePlayer checks(Player p, String args[], String psID, RegionManager rgm, WorldGuardPlugin wg, String permType, boolean checkPlayer) {
         if (permType.equals("members") && !p.hasPermission("protectionstones.members")) {
-            p.sendMessage(Messages.getMessage("no-permission", ""));
+            Messages.sendMessage(p, "no-permission", "");
             return null;
         } else if (permType.equals("owners") && !p.hasPermission("protectionstones.owners")) {
-            p.sendMessage(Messages.getMessage("no-permission", ""));
+            Messages.sendMessage(p, "no-permission", "");
             return null;
         } else if (ProtectionStones.hasNoAccess(rgm.getRegion(psID), p, wg.wrapPlayer(p), false)) {
-            p.sendMessage(Messages.getMessage("not-allowed-to-use", ""));
+            Messages.sendMessage(p, "not-allowed-to-use", "");
             return null;
         } else if (args.length < 2) {
-            p.sendMessage(Messages.getMessage("player-required", ""));
+            Messages.sendMessage(p, "player-required", "");
             return null;
         } else if (psID.equals("")) {
-            p.sendMessage(Messages.getMessage("not-in-claim", ""));
+            Messages.sendMessage(p, "not-in-claim", "");
             return null;
         }
         OfflinePlayer op = Bukkit.getOfflinePlayer(args[1]);
         if ((op == null || !op.hasPlayedBefore()) && checkPlayer) {
-            p.sendMessage(Messages.getMessage("player-not-found-db", "").replaceAll(Pattern.quote("{player}"), args[1]));
+            Messages.sendMessage(p, "player-not-found-db", "",
+                    "player", args[1]);
             return null;
         }
         return op;
@@ -89,9 +90,11 @@ public class ArgAddRemove {
         }
 
         if (type.equals("add") || type.equals("addowner")) {
-            p.sendMessage(Messages.getMessage("added-to-protection", "").replaceAll(Pattern.quote("{player}"), op.getName()));
+            Messages.sendMessage(p, "added-to-protection", "",
+                    "player", op.getName());
         } else if (type.equals("remove") || type.equals("removeowner")) {
-            p.sendMessage(Messages.getMessage("removed-from-protection", "").replaceAll(Pattern.quote("{player}"), op.getName()));
+            Messages.sendMessage(p, "removed-from-protection", "",
+                    "player", op.getName());
         }
         return true;
     }

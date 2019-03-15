@@ -32,13 +32,14 @@ public class ArgBypass {
     // /ps bypass [player (optional)]
     public static boolean argumentBypass(Player p, String[] args) {
         if (!p.hasPermission("protectionstones.bypass")) {
-            p.sendMessage(Messages.getMessage("no-permission", ""));
+            Messages.sendMessage(p, "no-permission", "");
             return true;
         }
         // set p to other player if specified
         if (args.length > 1) {
             if (Bukkit.getPlayer(args[1]) == null) {
-                p.sendMessage(Messages.getMessage("invalid-player", "").replaceAll(Pattern.quote("{player}"), args[1]));
+                Messages.sendMessage(p, "invalid-player", "",
+                        "player", args[1]);
                 return true;
             }
             p = Bukkit.getPlayer(args[1]);
@@ -61,7 +62,9 @@ public class ArgBypass {
 
         // TODO this command doesn't look finished, since there is no logic for using it...
 
-        p.sendMessage(Messages.getMessage("pvp-teleport-bypass", "").replaceAll(Pattern.quote("{status}"), "" + bool).replaceAll(Pattern.quote("{player}"), p.getName()));
+        Messages.sendMessage(p, "pvp-teleport-bypass", "",
+                "status", "" + bool,
+                "player", p.getName());
         return true;
     }
 }
