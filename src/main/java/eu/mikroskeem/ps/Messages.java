@@ -1,6 +1,8 @@
 package eu.mikroskeem.ps;
 
-import org.bukkit.ChatColor;
+import net.md_5.bungee.api.ChatColor;
+import net.md_5.bungee.api.chat.TextComponent;
+import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -9,6 +11,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.regex.Pattern;
 
 /**
  * @author Mark Vainomaa
@@ -36,5 +41,25 @@ public final class Messages {
     public static String getMessage(String path, String def) {
         String message = configuration.getString(path, def);
         return ChatColor.translateAlternateColorCodes('&', message);
+    }
+
+    public static void sendMessage(CommandSender sender, String path, String def, String... placeholders) {
+        if(placeholders.length % 2 != 0) {
+            throw new IllegalStateException("Placeholders array key should follow a value");
+        }
+
+        String message = getMessage(path, def);
+        if(message.isEmpty())
+            return;
+
+        Iterator<String> iter = Arrays.asList(placeholders).iterator();
+        while(iter.hasNext()) {
+            String key = Pattern.quote("{" + iter.next() + "}");
+            String value = iter.next();
+
+            message = message.replaceAll(key, value);
+        }
+
+        sender.spigot().sendMessage(TextComponent.fromLegacyText(message, ChatColor.WHITE));
     }
 }
