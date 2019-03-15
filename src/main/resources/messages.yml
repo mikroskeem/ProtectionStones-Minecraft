@@ -38,7 +38,7 @@ number-above-zero: "&cProtection &8| &fPalun sisesta number mis on suurem kui 0.
 error-finding-region-tp: "&cProtection &8| &fEi suutnud leida regioni kuhu teleportida."
 teleporting: "&cProtection &8| &fTeleporteerumine..."
 no-regions-owned: "&cProtection &8| &fSa ei oma siin maailmas ühtegi protectionit."
-owned-regions: "&cProtection &8| &fSul on siin maailmas ainult &c{count} &fprotectionit."
+owned-regions: "&cProtection &8| &fSul on siin maailmas &c{count} &fprotectionit."
 player-owned-regions: "&cProtection &8| &fMängijal &c{player} &fon siin maailmas ainult &c{count} &fprotectionit."
 player-no-regions-owned: "&cProtection &8| &fMängija &c{player} &fei oma siin maailmas ühtegi protectionit."
 error-finding-player-region: "&cProtection &8| &fMängija &c{player} &fala leidmisel tekkis viga. Oled kindel, et sisestasid nime õigesti?"

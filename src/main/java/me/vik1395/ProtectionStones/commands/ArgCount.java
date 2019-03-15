@@ -41,7 +41,7 @@ public class ArgCount {
         if (args.length == 1) {
             if (p.hasPermission("protectionstones.count")) {
                 count = countRegionsOfPlayer(wg.wrapPlayer(p), rgm);
-                p.sendMessage(ChatColor.YELLOW + "Your region count in this world: " + count);
+                p.sendMessage(Messages.getMessage("owned-regions", "").replaceAll(Pattern.quote("{count}"), "" + count));
             } else {
                 p.sendMessage(Messages.getMessage("no-permission", ""));
             }
