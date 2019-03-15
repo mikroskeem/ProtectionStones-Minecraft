@@ -19,6 +19,7 @@ package me.vik1395.ProtectionStones.commands;
 import com.sk89q.worldedit.math.BlockVector3;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import com.sk89q.worldguard.protection.managers.RegionManager;
+import eu.mikroskeem.ps.Messages;
 import me.vik1395.ProtectionStones.ProtectionStones;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -36,14 +37,14 @@ public class ArgView {
         RegionManager rgm = ProtectionStones.getRegionManagerWithPlayer(p);
 
         if (!p.hasPermission("protectionstones.view") && !p.hasPermission("protectionstones.view.others")) {
-            p.sendMessage("Sul pole luba kasutada seda §ckäsklust.");
+            p.sendMessage(Messages.getMessage("no-permission", ""));
             return true;
         }
         if (ProtectionStones.hasNoAccess(rgm.getRegion(psID), p, wg.wrapPlayer(p), true)) {
-            p.sendMessage("Sa ei tohi §ckasutada§f seda siin.");
+            p.sendMessage(Messages.getMessage("not-allowed-to-use", ""));
             return true;
         }
-        p.sendMessage("Genereerin §cäärt...");
+        p.sendMessage(Messages.getMessage("border-gen", ""));
 
         BlockVector3 minVector = rgm.getRegion(psID).getMinimumPoint();
         BlockVector3 maxVector = rgm.getRegion(psID).getMaximumPoint();
@@ -102,11 +103,10 @@ public class ArgView {
                 }
             }
 
-            Bukkit.getScheduler().runTaskLater(ProtectionStones.getPlugin(), () -> p.sendMessage("§cTehtud!&f Äär kaob §c30&f sekundi pärast ära."), wait);
+            Bukkit.getScheduler().runTaskLater(ProtectionStones.getPlugin(), () -> p.sendMessage(Messages.getMessage("border-done", "")), wait);
 
             Bukkit.getScheduler().runTaskLater(ProtectionStones.getPlugin(), () -> {
-                p.sendMessage("Eemaldan §cääre...");
-                p.sendMessage("Kui te ikka näete §cvõltsplokke§f siis §clogige§f uuesti sisse!");
+                p.sendMessage(Messages.getMessage("border-remove", ""));
                 for (Block b : blocks) {
                     if (b.getWorld().isChunkLoaded(b.getLocation().getBlockX()/16, b.getLocation().getBlockZ()/16)) {
                         p.sendBlockChange(b.getLocation(), b.getBlockData());

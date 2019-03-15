@@ -34,6 +34,17 @@ player-regions-removed: "&cProtection &8| &fMängija &c{player} &fprotectionid e
 player-regions: "&cProtection &8| &fMängija &c{player} &fprotectionid: &c{regions}"
 ps-count-desc: "&cProtection &8| &fTo see your ps count, type /ps count. Use any number within the range to teleport to that ps"
 number-above-zero: "&cProtection &8| &fPalun sisesta number mis on suurem kui 0."
+error-finding-region-tp: "&cProtection &8| &fEi suutnud leida regioni kuhu teleportida."
+teleporting: "&cProtection &8| &fTeleporteerumine..."
+no-regions-owned: "&cProtection &8| &fSa ei oma siin maailmas ühtegi protectionit."
+owned-regions: "&cProtection &8| &fSul on siin maailmas ainult &c{count} &fprotectionit."
+player-owned-regions: "&cProtection &8| &fMängijal &c{player} &fon siin maailmas ainult &c{count} &fprotectionit."
+player-no-regions-owned: "&cProtection &8| &fMängija &c{player} &fei oma siin maailmas ühtegi protectionit."
+error-finding-player-region: "&cProtection &8| &fMängija &c{player} &fala leidmisel tekkis viga. Oled kindel, et sisestasid nime õigesti?"
+error-teleporting-region: "&cProtection &8| &fError in teleporting to protected region! (parsing WG region name error)"
+border-gen: "&cProtection &8| &fGenereerin äärt..."
+border-remove: "&cProtection &8| &fEemaldan ääre..."
+border-done: "&cProtection &8| &fTehtud! Äär kaob &c30 sekundi &fpärast ära."
 info-title: |
   &r &r &r &r &r
   &f&l                    Protection Info

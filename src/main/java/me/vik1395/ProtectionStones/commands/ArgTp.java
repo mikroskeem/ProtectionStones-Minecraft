@@ -28,6 +28,7 @@ import org.bukkit.entity.Player;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 public class ArgTp {
 
@@ -73,7 +74,7 @@ public class ArgTp {
             try {
                 lp = wg.wrapOfflinePlayer(Bukkit.getOfflinePlayer(args[1]));
             } catch (Exception e) {
-                p.sendMessage(ChatColor.RED + "Error while searching for " + args[1] + "'s regions. Please make sure you have entered the correct name.");
+                p.sendMessage(Messages.getMessage("error-finding-player-region", "").replaceAll(Pattern.quote("{player}"), args[1]));
                 return true;
             }
 
@@ -88,10 +89,10 @@ public class ArgTp {
             }
 
             if (index <= 0) {
-                p.sendMessage(ChatColor.RED + lp.getName() + " doesn't own any protected regions in this world!");
+                p.sendMessage(Messages.getMessage("player-no-regions-owned", "").replaceAll(Pattern.quote("{player}"), lp.getName()));
                 return true;
             } else if (rgnum > index) {
-                p.sendMessage(ChatColor.RED + lp.getName() + " only has " + index + " protected regions in this world!");
+                p.sendMessage(Messages.getMessage("player-owned-regions", "").replaceAll(Pattern.quote("{player}"), lp.getName()).replaceAll(Pattern.quote("{count}"), "" + index));
                 return true;
             }
         } else if (args[0].equalsIgnoreCase("home")) {
@@ -106,10 +107,10 @@ public class ArgTp {
             }
 
             if (index <= 0) {
-                p.sendMessage(ChatColor.RED + "You don't own any protected regions in this world!");
+                p.sendMessage(Messages.getMessage("no-regions-owned", ""));
             }
             if (rgnum > index) {
-                p.sendMessage(ChatColor.RED + "You only have " + index + " total regions in this world!");
+                p.sendMessage(Messages.getMessage("owned-regions", "").replace(Pattern.quote("{count}"), "" + index));
                 return true;
             }
         }
@@ -120,14 +121,14 @@ public class ArgTp {
             String[] pos = region.split("x|y|z");
             if (pos.length == 3) {
                 pos[0] = pos[0].substring(2);
-                p.sendMessage(ChatColor.GREEN + "Teleporting...");
+                p.sendMessage(Messages.getMessage("telporting", ""));
                 Location tploc = new Location(p.getWorld(), Integer.parseInt(pos[0]), Integer.parseInt(pos[1]), Integer.parseInt(pos[2]));
                 p.teleport(tploc);
             } else {
-                p.sendMessage(ChatColor.RED + "Error in teleporting to protected region! (parsing WG region name error)");
+                p.sendMessage(Messages.getMessage("error-teleporting-region", ""));
             }
         } else {
-            p.sendMessage(ChatColor.RED + "Error in finding the region to teleport to!");
+            p.sendMessage(Messages.getMessage("error-finding-region-tp", ""));
         }
 
         return true;
