@@ -18,6 +18,7 @@ package me.vik1395.ProtectionStones.commands.admin;
 
 import com.sk89q.worldguard.protection.managers.RegionManager;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
+import eu.mikroskeem.ps.Messages;
 import me.vik1395.ProtectionStones.PSLocation;
 import me.vik1395.ProtectionStones.ProtectionStones;
 import org.bukkit.ChatColor;
@@ -32,6 +33,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Pattern;
 
 public class ArgAdminHide {
 
@@ -40,7 +42,7 @@ public class ArgAdminHide {
         RegionManager mgr = ProtectionStones.getRegionManagerWithPlayer(p);
         Map<String, ProtectedRegion> regions = mgr.getRegions();
         if (regions.isEmpty()) {
-            p.sendMessage(ChatColor.YELLOW + "No ProtectionStones Regions Found");
+            p.sendMessage(Messages.getMessage("no-regions-found", ""));
         }
         List<String> regionIDList = new ArrayList<>();
         String blockMaterial = "AIR";
@@ -54,7 +56,7 @@ public class ArgAdminHide {
         }
 
         if (regionIDList.isEmpty()) {
-            p.sendMessage(ChatColor.YELLOW + "No ProtectionStones Regions Found");
+            p.sendMessage(Messages.getMessage("no-regions-found", ""));
             return true;
         }
         for (String regionID : regionIDList) {
@@ -81,7 +83,7 @@ public class ArgAdminHide {
                         blockToChange.setType(Material.getMaterial(blockMaterial));
                     }
                 } else {
-                    p.sendMessage(ChatColor.YELLOW + "This PStone doesn't appear hidden...");
+                    p.sendMessage(Messages.getMessage("pstone-already-shown", ""));
                 }
                 //}
             } else if (args[1].equalsIgnoreCase("hide")) {
@@ -95,7 +97,7 @@ public class ArgAdminHide {
                             Logger.getLogger(ProtectionStones.class.getName()).log(Level.SEVERE, null, ex);
                         }
                     } else {
-                        p.sendMessage(ChatColor.YELLOW + "This PStone appears to already be hidden...");
+                        p.sendMessage(Messages.getMessage("pstone-already-hidden", ""));
                     }
                 } else {
                     if (subtype != null && (blockToChange.getData() != (byte) (Integer.parseInt(subtype))))
@@ -114,7 +116,7 @@ public class ArgAdminHide {
         if (args[1].equalsIgnoreCase("unhide")) {
             hMessage = "unhidden";
         }
-        p.sendMessage(ChatColor.YELLOW + "All ProtectionStones have been " + hMessage + " in this world.");
+        p.sendMessage(Messages.getMessage("pstone-visibility-change", "").replaceAll(Pattern.quote("{status}"), hMessage));
         return true;
     }
 }

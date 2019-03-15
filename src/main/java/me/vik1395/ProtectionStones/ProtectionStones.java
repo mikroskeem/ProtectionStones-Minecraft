@@ -247,23 +247,7 @@ public class ProtectionStones extends JavaPlugin {
             Player p = (Player) s;
             if (cmd.getName().equalsIgnoreCase("ps")) {
                 if (args.length == 0 || args[0].equalsIgnoreCase("help")) {
-                    p.sendMessage(ChatColor.YELLOW + "/ps info members|owners|flags");//\\
-                    p.sendMessage(ChatColor.YELLOW + "/ps add|remove {playername}");//\\
-                    p.sendMessage(ChatColor.YELLOW + "/ps addowner|removeowner {playername}");//\\
-                    p.sendMessage(ChatColor.YELLOW + "/ps count [player]");//\\
-                    p.sendMessage(ChatColor.YELLOW + "/ps flag {flagname} {setting|null}");//\\
-                    p.sendMessage(ChatColor.YELLOW + "/ps home {num} - " + ChatColor.GREEN + "{num} has to be within the number of protected regions you own. Use /ps count to check");
-                    p.sendMessage(ChatColor.YELLOW + "/ps tp {player} {num}");
-                    p.sendMessage(ChatColor.YELLOW + "/ps hide|unhide");//\\
-                    p.sendMessage(ChatColor.YELLOW + "/ps toggle");//\\
-                    p.sendMessage(ChatColor.YELLOW + "/ps view");//\\
-                    p.sendMessage(ChatColor.YELLOW + "/ps reclaim");//\\
-                    p.sendMessage(ChatColor.YELLOW + "/ps priority {number|null}");//\\
-                    p.sendMessage(ChatColor.YELLOW + "/ps region count|list|remove|regen|disown {playername}");//\\
-                    p.sendMessage(ChatColor.YELLOW + "/ps admin { version | settings | hide | unhide |");//\\
-                    p.sendMessage(ChatColor.YELLOW + "           cleanup | lastlogon | lastlogons | stats }");//\\
-                    p.sendMessage(ChatColor.YELLOW + "/ps bypass");//\\
-                    p.sendMessage(ChatColor.YELLOW + "/ps reload");//\\
+                    p.sendMessage(Messages.getMessage("help", ""));
                     return true;
                 }
 
@@ -297,13 +281,13 @@ public class ProtectionStones extends JavaPlugin {
                         if (p.hasPermission("protectionstones.toggle")) {
                             if (!toggleList.contains(p.getName())) {
                                 toggleList.add(p.getName());
-                                p.sendMessage(ChatColor.YELLOW + "ProtectionStone placement turned off");
+                                p.sendMessage(Messages.getMessage("protection-placement-off", ""));
                             } else {
                                 toggleList.remove(p.getName());
-                                p.sendMessage(ChatColor.YELLOW + "ProtectionStone placement turned on");
+                                p.sendMessage(Messages.getMessage("protection-placement-on", ""));
                             }
                         } else {
-                            p.sendMessage(ChatColor.RED + "You don't have permission to use the toggle command.");
+                            p.sendMessage(Messages.getMessage("no-permissions", ""));
                         }
                         break;
                     case "count":
@@ -342,15 +326,15 @@ public class ProtectionStones extends JavaPlugin {
                         return ArgInfo.argumentInfo(p, args, currentPSID);
                     case "reload": {
                         Messages.reload();
-                        p.sendMessage(Messages.getMessage("messages-reloaded", "&c&l> &fSõnumid taaslaetud"));
+                        p.sendMessage(Messages.getMessage("messages-reloaded", ""));
                         break;
                     }
                     default:
-                        p.sendMessage(Messages.getMessage("no-such-command", "&c&l> &fTundmatu käsk, kasuta &c/ps help"));
+                        p.sendMessage(Messages.getMessage("no-such-command", ""));
                 }
             }
         } else {
-            s.sendMessage(Messages.getMessage("players-only", "&c&l> &fProtectionStones ei saa konsoolis kasutada"));
+            s.sendMessage(Messages.getMessage("players-only", ""));
         }
         return true;
     }

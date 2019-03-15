@@ -29,6 +29,7 @@ import com.sk89q.worldguard.protection.managers.storage.StorageException;
 import com.sk89q.worldguard.protection.regions.ProtectedCuboidRegion;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import com.sk89q.worldguard.protection.regions.RegionContainer;
+import eu.mikroskeem.ps.Messages;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -131,14 +132,14 @@ public class ListenerClass implements Listener {
                         }
                         if (count >= max) {
                             if (max != 0) {
-                                p.sendMessage("Sa ei saa teha rohkem §ckaitsealasid!");
+                                p.sendMessage(Messages.getMessage("protection-limit-reached", ""));
                                 e.setCancelled(true);
                                 return;
                             }
                         }
                         for (String world : ProtectionStones.deniedWorlds) {
                             if (world.equals(p.getLocation().getWorld().getName())) {
-                                p.sendMessage("Sa ei saa §cala kaitsta§f siin §cmaailmas!");
+                                p.sendMessage(Messages.getMessage("world-protection-denied", ""));
                                 e.setCancelled(true);
                                 return;
                             }
@@ -195,7 +196,7 @@ public class ListenerClass implements Listener {
                                 e1.printStackTrace();
                             } // commented out below because the region gets removed anyways ¯\_(ツ)_/¯
                             //if (!p.hasPermission("protectionstones.admin")) {
-                            p.sendMessage("Sa ei saa siin §cala kaitsta§f kuna see kattub kellegi §cteise alaga.");
+                            p.sendMessage(Messages.getMessage("protection-overlaps", ""));
                             e.setCancelled(true);
                             return;
                             //}
@@ -238,7 +239,7 @@ public class ListenerClass implements Listener {
                     }
                     region.setFlags(newFlags);
                     region.setPriority(ProtectionStones.priority);
-                    p.sendMessage("See §cala§f on nüüd §ckaitstud.");
+                    p.sendMessage(Messages.getMessage("protection-done", ""));
                     try {
                         rm.saveChanges();
                         rm.save();
@@ -264,11 +265,11 @@ public class ListenerClass implements Listener {
                         }
                     }
                 } else {
-                    p.sendMessage("Sul pole §cõigust§f maha panna §calakaitset.");
+                    p.sendMessage(Messages.getMessage("no-permissions", ""));
                     e.setCancelled(true);
                 }
             } else {
-                p.sendMessage("Sa ei saa §ckaitsta§f seda §cala.");
+                p.sendMessage(Messages.getMessage("no-permission", ""));
                 e.setCancelled(true);
             }
         }
@@ -329,9 +330,9 @@ public class ListenerClass implements Listener {
                                     } catch (Exception e1) {
                                         ProtectionStones.getPlugin().getLogger().info("WorldGuard Error [" + e1 + "] during Region File Save");
                                     }
-                                    player.sendMessage("See §cala§f pole enam §ckaitstud.");
+                                    player.sendMessage(Messages.getMessage("protection-removed", ""));
                                 } else {
-                                    player.sendMessage("Sul pole §cküllalt§f ruumi §cseljakotis.");
+                                    player.sendMessage(Messages.getMessage("inventory-full", ""));
                                 }
                             } else {
                                 pb.setType(Material.AIR);
@@ -341,11 +342,11 @@ public class ListenerClass implements Listener {
                                 } catch (Exception e1) {
                                     ProtectionStones.getPlugin().getLogger().info("WorldGuard Error [" + e1 + "] during Region File Save");
                                 }
-                                player.sendMessage("See §cala§f pole enam §ckaitstud.");
+                                player.sendMessage(Messages.getMessage("protection-removed", ""));
                             }
                             e.setCancelled(true);
                         } else {
-                            player.sendMessage("Sa ei ole selle §cala omanik.");
+                            player.sendMessage(Messages.getMessage("not-owner", ""));
                             e.setCancelled(true);
                         }
                     } else if (StoneTypeData.SilkTouch(blocktypedata)) {
@@ -480,14 +481,14 @@ public class ListenerClass implements Listener {
                             } else {
                                 if (regions.testState(WorldGuardPlugin.inst().wrapPlayer(p), Flags.PVP)) {
                                     event.setCancelled(true);
-                                    p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&cTeleportation blocked! &eDestination was a &cPVP &earea and cannot be teleported to."));
+                                    p.sendMessage(Messages.getMessage("pvp-area-tp-blocked", ""));
                                 }
                             }
                         }
                     } else {
                         if (regions.testState(WorldGuardPlugin.inst().wrapPlayer(p), Flags.PVP)) {
                             event.setCancelled(true);
-                            p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&cTeleportation blocked! &eDestination was a &cPVP &earea and cannot be teleported to."));
+                            p.sendMessage(Messages.getMessage("pvp-area-tp-blocked", ""));
                         }
                     }
                 }
@@ -513,7 +514,7 @@ public class ListenerClass implements Listener {
                 if (regionFrom != null) {
                     if (!regionFrom.testState(WorldGuardPlugin.inst().wrapPlayer(p), Flags.PVP)) {
                         if (region.testState(WorldGuardPlugin.inst().wrapPlayer(p), Flags.PVP)) {
-                            p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&cWarning! &eThis area is a &cPVP &earea! You may &cdie &eand &close stuff&e!"));
+                            p.sendMessage(Messages.getMessage("pvp-area-warning", ""));
                         }
                     }
                 }

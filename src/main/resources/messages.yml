@@ -18,6 +18,7 @@ ps-count-usage: "&cProtection &8| &fKäsklus: &c/ps count [<mängija>]"
 ps-flag-usage: "&cProtection &8| &fKäsklus: &c/ps flag <flag name> <flag value>"
 ps-info-usage: "&cProtection &8| &fKäsklus: &c/ps info <members/owners/flags>"
 ps-region-usage: "&cProtection &8| &fKäsklus: &c/ps region <count/list/remove/regen/disown> <mängija>"
+ps-admin-cleanup-usage: "&cProtection &8| &fKäsklus: &c/ps admin cleanup <remove/regen/disown> <days>"
 ps-tp-usage: "&cProtection &8| &fKäsklus: &c/ps tp <mängija> <num>"
 ps-home-usage: "&cProtection &8| &fKäsklus: &c/ps home <num>"
 not-in-protection: "&cProtection &8| &fSee ei ole ProtectionStones alakaitse!"
@@ -42,9 +43,27 @@ player-owned-regions: "&cProtection &8| &fMängijal &c{player} &fon siin maailma
 player-no-regions-owned: "&cProtection &8| &fMängija &c{player} &fei oma siin maailmas ühtegi protectionit."
 error-finding-player-region: "&cProtection &8| &fMängija &c{player} &fala leidmisel tekkis viga. Oled kindel, et sisestasid nime õigesti?"
 error-teleporting-region: "&cProtection &8| &fError in teleporting to protected region! (parsing WG region name error)"
+error-parsing-days: "&cProtection &8| &fError parsing days."
 border-gen: "&cProtection &8| &fGenereerin äärt..."
 border-remove: "&cProtection &8| &fEemaldan ääre..."
 border-done: "&cProtection &8| &fTehtud! Äär kaob &c30 sekundi &fpärast ära."
+flag-set: "&cProtection &8| &fMäärasid flagi: &c{flag}"
+flag-not-set: "&cProtection &8| &fFlagi &c{flag} &fei määratud."
+protection-limit-reached: "&cProtection &8| &fSa ei saa siin maailmas rohkem protectioneid teha."
+world-protection-denied: "&cProtection &8| &fSa ei saa siin maailmas luua oma protectionit."
+protection-overlaps: "&cProtection &8| &fSa ei saa siin oma protectionit luua, kuna see kattuks teisega."
+protection-done: "&cProtection &8| &fSee ala on nüüdsest kaitstud."
+protection-removed: "&cProtection &8| &fSee ala ei ole enam kaitstud."
+pvp-area-tp-blocked: "&cServer &8| &fTeleportimine tühistati, kuna sihtkohaks oli pvp area."
+pvp-area-warning: "&cWarning &8| &fTegemist on PVP alaga ning sa võid kaotada siin oma asjad."
+protection-placement-off: "&cProtection &8| &fProtectionStones asetamine on nüüdsest välja lülitatud."
+protection-placement-on: "&cProtection &8| &fProtectionStones asetamine on nüüdsest sisse lülitatud."
+cleanup: "&cProtection &8| &fCleanup &c{type} {days} &fdays."
+cleanup-completed: "&cProtection &8| &fCompleted &c{type} &fcleanup."
+no-regions-found: "&cProtection &8| &fNo ProtectionStones Regions Found"
+pstone-already-shown: "&cProtection &8| &fThis PStone doesn't appear hidden..."
+pstone-already-hidden: "&cProtection &8| &fThis PStone appears to already be hidden..."
+pstone-visiblity-change: "&cProtection &8| &fAll ProtectionStones have been {status} in this world."
 info-title: |
   &r &r &r &r &r
   &f&l                    Protection Info
@@ -57,3 +76,12 @@ region-members-info: "&fMembers: "
 region-bounds-info: "&fBounds: &c{bounds}"
 priority-info: "&fPriority: &c{priority}"
 none: "&cnone"
+help: |
+  &r &r &r &r &r
+  &f&l                  Protection Help
+  &r &r &r &r &r
+  &c /ps info <members/owners/flags>
+  &c /ps <add/remove> <mängija>
+  &c /ps <addowner/removeowner> <mängija>
+  &c /ps count
+  &r &r &r &r &r

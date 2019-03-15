@@ -20,6 +20,7 @@ import com.sk89q.worldguard.LocalPlayer;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import com.sk89q.worldguard.protection.managers.RegionManager;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
+import eu.mikroskeem.ps.Messages;
 import me.vik1395.ProtectionStones.ProtectionStones;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -29,6 +30,7 @@ import org.bukkit.entity.Player;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 public class ArgAdminCleanup {
 
@@ -36,7 +38,7 @@ public class ArgAdminCleanup {
     public static boolean argumentAdminCleanup(Player p, String[] args) {
         WorldGuardPlugin wg = (WorldGuardPlugin) ProtectionStones.wgd;
         if (args.length < 3 || (!args[2].equalsIgnoreCase("remove") && !args[2].equalsIgnoreCase("regen") && !args[2].equalsIgnoreCase("disown"))) {
-            p.sendMessage(ChatColor.YELLOW + "/ps admin cleanup {remove|regen|disown} {days}");
+            p.sendMessage(Messages.getMessage("ps-admin-cleanup-usage", ""));
             return true;
         }
 
@@ -46,13 +48,13 @@ public class ArgAdminCleanup {
         try {
             Integer.parseInt(args[3]);
         } catch (Exception e) {
-            p.sendMessage(ChatColor.YELLOW + "Error parsing days.");
+            p.sendMessage(Messages.getMessage("error-parsing-days", ""));
             return true;
         }
 
         if ((args[2].equalsIgnoreCase("remove")) || (args[2].equalsIgnoreCase("regen")) || (args[2].equalsIgnoreCase("disown"))) {
             int days = (args.length > 3) ? Integer.parseInt(args[3]) : 30; // 30 days is default if days aren't specified
-            p.sendMessage(ChatColor.YELLOW + "Cleanup " + args[2] + " " + days + " days");
+            p.sendMessage(Messages.getMessage("cleanup", "").replaceAll(Pattern.quote("{type}"), args[2]).replaceAll(Pattern.quote("{days]"), "" + days));
             p.sendMessage(ChatColor.YELLOW + "================");
 
             // loop over offline players to delete old data
@@ -77,7 +79,7 @@ public class ArgAdminCleanup {
                 }
 
                 if (!found) {
-                    p.sendMessage(ChatColor.YELLOW + "No regions found for " + op.getName() + " in this world.");
+                    p.sendMessage(Messages.getMessage("player-no-regions-owned", "").replaceAll(Pattern.quote("{player}"), op.getName()));
                     continue;
                 }
 
@@ -94,7 +96,7 @@ public class ArgAdminCleanup {
                 ProtectionStones.getPlugin().getLogger().info("WorldGuard Error [" + e + "] during Region File Save");
             }
             p.sendMessage(ChatColor.YELLOW + "================");
-            p.sendMessage(ChatColor.YELLOW + "Completed " + args[2] + " cleanup");
+            p.sendMessage(Messages.getMessage("cleanup-completed", "").replaceAll(Pattern.quote("{type}"), args[2]));
         }
         return true;
     }
