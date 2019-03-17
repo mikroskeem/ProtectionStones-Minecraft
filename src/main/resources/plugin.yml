@@ -1,7 +1,8 @@
 name: ProtectionStones
 version: ${version}
-description: ${description}
-authors: [Vik1395,Dragoboss,Jarzean,Dylan-BukkitPlugins,EspiDev]
+description: ${description} - Translated and improved version for Crafterz.ee
+authors: [Vik1395,Dragoboss,Jarzean,Dylan-BukkitPlugins,EspiDev,mikroskeem,ArdiK_,kaimokene]
+website: https://github.com/mikroskeem/ProtectionStones-Minecraft
 
 depend: [WorldGuard, WorldEdit]
 main: me.vik1395.ProtectionStones.ProtectionStones
