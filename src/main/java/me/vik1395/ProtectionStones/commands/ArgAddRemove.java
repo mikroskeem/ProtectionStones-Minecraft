@@ -46,7 +46,7 @@ public class ArgAddRemove {
             return null;
         }
         OfflinePlayer op = Bukkit.getOfflinePlayer(args[1]);
-        if ((op == null || !op.hasPlayedBefore()) && checkPlayer) {
+        if ((op == null || (!op.hasPlayedBefore() && !op.isOnline())) && checkPlayer) {
             Messages.sendMessage(p, "player-not-found-db", "",
                     "player", args[1]);
             return null;
