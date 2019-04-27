@@ -75,6 +75,7 @@ region-owners-info: "&fOwners: "
 region-members-info: "&fMembers: "
 region-protection-block-location: "&fProtection block location: &c{location}"
 region-bounds-info: "&fBounds: &c{bounds}"
+not-protectionstones-region: "(not ProtectionStones region)"
 priority-info: "&fPriority: &c{priority}"
 none: "&cnone"
 help: |

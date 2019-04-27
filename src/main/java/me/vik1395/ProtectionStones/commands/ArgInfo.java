@@ -67,8 +67,13 @@ public class ArgInfo {
             displayOwners(p, region);
             displayMembers(p, region);
 
-            PSLocation location = ProtectionStones.parsePSRegionToLocation(region.getId());
-            String locationText = location.x + ", " + location.y + ", " + location.z;
+            String locationText = Messages.getMessage("not-protectionstones-region", "");
+            try {
+                if(region.getId().startsWith("ps")) {
+                    PSLocation location = ProtectionStones.parsePSRegionToLocation(region.getId());
+                    locationText = location.x + ", " + location.y + ", " + location.z;
+                }
+            } catch (Exception ignored) {}
             p.sendMessage(Messages.getMessage("region-protection-block-location", "").replaceAll(Pattern.quote("{location}"), locationText));
 
             BlockVector3 min = region.getMinimumPoint();
