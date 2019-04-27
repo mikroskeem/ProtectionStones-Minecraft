@@ -25,6 +25,7 @@ import com.sk89q.worldguard.protection.flags.RegionGroupFlag;
 import com.sk89q.worldguard.protection.managers.RegionManager;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import eu.mikroskeem.ps.Messages;
+import me.vik1395.ProtectionStones.PSLocation;
 import me.vik1395.ProtectionStones.ProtectionStones;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -66,9 +67,14 @@ public class ArgInfo {
             displayOwners(p, region);
             displayMembers(p, region);
 
+            PSLocation location = ProtectionStones.parsePSRegionToLocation(region.getId());
+            String locationText = location.x + ", " + location.y + ", " + location.z;
+            p.sendMessage(Messages.getMessage("region-protection-block-location", "").replaceAll(Pattern.quote("{location}"), locationText));
+
             BlockVector3 min = region.getMinimumPoint();
             BlockVector3 max = region.getMaximumPoint();
-            p.sendMessage(Messages.getMessage("region-bounds-info", "").replaceAll(Pattern.quote("{bounds}"), "(" + min.getBlockX() + "," + min.getBlockY() + "," + min.getBlockZ() + ") -> (" + max.getBlockX() + "," + max.getBlockY() + "," + max.getBlockZ() + ")"));
+            String boundsText = "(" + min.getBlockX() + "," + min.getBlockY() + "," + min.getBlockZ() + ") -> (" + max.getBlockX() + "," + max.getBlockY() + "," + max.getBlockZ() + ")";
+            p.sendMessage(Messages.getMessage("region-bounds-info", "").replaceAll(Pattern.quote("{bounds}"), boundsText));
 
         } else if (args.length == 2) { // get specific information on current region
 
