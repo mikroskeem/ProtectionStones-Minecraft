@@ -23,14 +23,15 @@ import com.sk89q.worldguard.LocalPlayer;
 import com.sk89q.worldguard.WorldGuard;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import com.sk89q.worldguard.protection.ApplicableRegionSet;
-import com.sk89q.worldguard.protection.flags.*;
+import com.sk89q.worldguard.protection.flags.Flag;
+import com.sk89q.worldguard.protection.flags.Flags;
+import com.sk89q.worldguard.protection.flags.StateFlag;
 import com.sk89q.worldguard.protection.managers.RegionManager;
 import com.sk89q.worldguard.protection.managers.storage.StorageException;
 import com.sk89q.worldguard.protection.regions.ProtectedCuboidRegion;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import com.sk89q.worldguard.protection.regions.RegionContainer;
 import eu.mikroskeem.ps.Messages;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -54,7 +55,12 @@ import org.bukkit.metadata.MetadataValue;
 import org.bukkit.permissions.PermissionAttachmentInfo;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -401,22 +407,22 @@ public class ListenerClass implements Listener {
     @EventHandler(priority = EventPriority.HIGH)
     public void onPistonExtend(BlockPistonExtendEvent e) {
         List<Block> pushedBlocks = e.getBlocks();
-        if (pushedBlocks != null) {
-            Iterator<Block> it = pushedBlocks.iterator();
-            while (it.hasNext()) {
-                Block b = it.next();
-                int type = 0;
-                String blocktypedata = b.getType().toString() + "-" + b.getData();
-                if (ProtectionStones.mats.contains(blocktypedata)) {
-                    type = 1;
-                } else if (ProtectionStones.mats.contains(b.getType().toString())) {
-                    type = 2;
-                }
-                if (type == 2) blocktypedata = b.getType().toString();
-                if (type > 0) {
-                    if (StoneTypeData.BlockPiston(blocktypedata)) {
-                        e.setCancelled(true);
-                    }
+        if (pushedBlocks.isEmpty())
+            return;
+
+        // TODO: get rid of this deprecated API usage
+        for (Block b : pushedBlocks) {
+            int type = 0;
+            String blocktypedata = b.getType().toString() + "-" + b.getData();
+            if (ProtectionStones.mats.contains(blocktypedata)) {
+                type = 1;
+            } else if (ProtectionStones.mats.contains(b.getType().toString())) {
+                type = 2;
+            }
+            if (type == 2) blocktypedata = b.getType().toString();
+            if (type > 0) {
+                if (StoneTypeData.BlockPiston(blocktypedata)) {
+                    e.setCancelled(true);
                 }
             }
         }
@@ -425,22 +431,22 @@ public class ListenerClass implements Listener {
     @EventHandler(priority = EventPriority.HIGH)
     public void onPistonRetract(BlockPistonRetractEvent e) {
         List<Block> retractedBlocks = e.getBlocks();
-        if (retractedBlocks != null) {
-            Iterator<Block> it = retractedBlocks.iterator();
-            while (it.hasNext()) {
-                Block b = it.next();
-                int type = 0;
-                String blocktypedata = b.getType().toString() + "-" + b.getData();
-                if (ProtectionStones.mats.contains(blocktypedata)) {
-                    type = 1;
-                } else if (ProtectionStones.mats.contains(b.getType().toString())) {
-                    type = 2;
-                }
-                if (type == 2) blocktypedata = b.getType().toString();
-                if (type > 0) {
-                    if (StoneTypeData.BlockPiston(blocktypedata)) {
-                        e.setCancelled(true);
-                    }
+        if (retractedBlocks.isEmpty())
+            return;
+
+        // TODO: get rid of this deprecated API usage
+        for (Block b : retractedBlocks) {
+            int type = 0;
+            String blocktypedata = b.getType().toString() + "-" + b.getData();
+            if (ProtectionStones.mats.contains(blocktypedata)) {
+                type = 1;
+            } else if (ProtectionStones.mats.contains(b.getType().toString())) {
+                type = 2;
+            }
+            if (type == 2) blocktypedata = b.getType().toString();
+            if (type > 0) {
+                if (StoneTypeData.BlockPiston(blocktypedata)) {
+                    e.setCancelled(true);
                 }
             }
         }
@@ -448,77 +454,67 @@ public class ListenerClass implements Listener {
 
     @EventHandler(priority = EventPriority.HIGH)
     public void onPlayerTeleport(PlayerTeleportEvent event) {
-        if (ProtectionStones.config.getBoolean("Teleport to PVP.Block Teleport") == true) {
-            Player p = event.getPlayer();
-            WorldGuardPlugin wg = (WorldGuardPlugin) ProtectionStones.wgd;
+        if (!ProtectionStones.config.getBoolean("Teleport to PVP.Block Teleport"))
+            return;
 
-            if (!wg.isEnabled()) {
-                return;
+        WorldGuardPlugin wg = (WorldGuardPlugin) ProtectionStones.wgd;
+        RegionContainer regionContainer = WorldGuard.getInstance().getPlatform().getRegionContainer();
+        LocalPlayer player = wg.wrapPlayer(event.getPlayer());
+
+        RegionManager rgm = regionContainer.get(BukkitAdapter.adapt(event.getFrom().getWorld()));
+        BlockVector3 v = BukkitAdapter.asBlockVector(event.getTo());
+        ApplicableRegionSet regions = rgm.getApplicableRegions(v);
+
+        if (event.getCause() == TeleportCause.ENDER_PEARL) return;
+        if (event.getCause() == TeleportCause.CHORUS_FRUIT) return;
+
+        boolean ownsAll = false;
+        for (ProtectedRegion r : regions) {
+            if (r.getOwners().contains(player)) {
+                ownsAll = true;
             }
-            RegionContainer regionContainer = WorldGuard.getInstance().getPlatform().getRegionContainer();
-            RegionManager rgm = regionContainer.get(BukkitAdapter.adapt(event.getFrom().getWorld()));
-            BlockVector3 v = BlockVector3.at(event.getTo().getX(), event.getTo().getY(), event.getTo().getZ());
-            if (rgm.getApplicableRegions(v) != null) {
-                ApplicableRegionSet regions = rgm.getApplicableRegions(v);
+        }
 
-                if (event.getCause() == TeleportCause.ENDER_PEARL) return;
-                try {
-                    if (event.getCause() == TeleportCause.CHORUS_FRUIT) return;
-                } catch (NoSuchFieldError e1) {
-                }
-                boolean ownsAll = false;
-                for (ProtectedRegion r : regions) {
-                    if (r.getOwners().contains(wg.wrapPlayer(p))) {
-                        ownsAll = true;
-                    }
-                }
-                if (!ownsAll) {
-                    if (p.hasMetadata("psBypass")) {
-                        List<MetadataValue> values = p.getMetadata("psBypass");
-                        for (MetadataValue value : values) {
-                            if (value.asBoolean() == true) {
-                                return;
-                            } else {
-                                if (regions.testState(WorldGuardPlugin.inst().wrapPlayer(p), Flags.PVP)) {
-                                    event.setCancelled(true);
-                                    p.sendMessage(Messages.getMessage("pvp-area-tp-blocked", ""));
-                                }
-                            }
-                        }
-                    } else {
-                        if (regions.testState(WorldGuardPlugin.inst().wrapPlayer(p), Flags.PVP)) {
-                            event.setCancelled(true);
-                            p.sendMessage(Messages.getMessage("pvp-area-tp-blocked", ""));
-                        }
-                    }
+        if (ownsAll)
+            return;
+
+        if (event.getPlayer().hasMetadata("psBypass")) {
+            List<MetadataValue> values = event.getPlayer().getMetadata("psBypass");
+            for (MetadataValue value : values) {
+                if (value.asBoolean())
+                    return;
+
+                if (regions.testState(player, Flags.PVP)) {
+                    event.setCancelled(true);
+                    event.getPlayer().sendMessage(Messages.getMessage("pvp-area-tp-blocked", ""));
+                    break;
                 }
             }
+        } else if (regions.testState(player, Flags.PVP)) {
+            event.setCancelled(true);
+            event.getPlayer().sendMessage(Messages.getMessage("pvp-area-tp-blocked", ""));
         }
     }
 
     @EventHandler(priority = EventPriority.HIGH)
     public void onPlayerMove(PlayerMoveEvent event) {
-        if (ProtectionStones.config.getBoolean("Teleport to PVP.Display Warning") == true) {
-            Player p = event.getPlayer();
-            WorldGuardPlugin wg = (WorldGuardPlugin) ProtectionStones.wgd;
+        if (!ProtectionStones.config.getBoolean("Teleport to PVP.Display Warning", true))
+            return;
 
-            if (!wg.isEnabled()) {
-                return;
-            }
-            RegionContainer regionContainer = WorldGuard.getInstance().getPlatform().getRegionContainer();
-            RegionManager rgm = regionContainer.get(BukkitAdapter.adapt(event.getFrom().getWorld()));
-            BlockVector3 v = BlockVector3.at(event.getTo().getX(), event.getTo().getY(), event.getTo().getZ());
-            if (rgm.getApplicableRegions(v) != null) {
-                ApplicableRegionSet region = rgm.getApplicableRegions(v);
-                ApplicableRegionSet regionFrom = rgm.getApplicableRegions(v);
-                if (regionFrom != null) {
-                    if (!regionFrom.testState(WorldGuardPlugin.inst().wrapPlayer(p), Flags.PVP)) {
-                        if (region.testState(WorldGuardPlugin.inst().wrapPlayer(p), Flags.PVP)) {
-                            p.sendMessage(Messages.getMessage("pvp-area-warning", ""));
-                        }
-                    }
-                }
-            }
+        WorldGuardPlugin wg = (WorldGuardPlugin) ProtectionStones.wgd;
+        RegionContainer regionContainer = WorldGuard.getInstance().getPlatform().getRegionContainer();
+
+        RegionManager rgm = regionContainer.get(BukkitAdapter.adapt(event.getFrom().getWorld()));
+        LocalPlayer player = wg.wrapPlayer(event.getPlayer());
+
+        BlockVector3 fromVector = BukkitAdapter.asBlockVector(event.getFrom());
+        BlockVector3 toVector = BukkitAdapter.asBlockVector(event.getTo());
+
+        ApplicableRegionSet regionFrom = rgm.getApplicableRegions(fromVector);
+        ApplicableRegionSet regionTo = rgm.getApplicableRegions(toVector);
+
+        if (!regionFrom.testState(player, Flags.PVP) && regionTo.testState(player, Flags.PVP)) {
+            event.getPlayer().sendMessage(Messages.getMessage("pvp-area-warning", ""));
         }
     }
 
