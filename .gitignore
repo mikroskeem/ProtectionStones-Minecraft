@@ -1,8 +1,22 @@
-/target/
-/.idea/
-/bin/
-/.settings/
-/ProtectionStones.iml
-/.classpath
-/.project
-/dependency-reduced-pom.xml
+# JVM crash related
+core.*
+hs_err_pid*
+
+# IntelliJ IDEA
+*.iml
+.idea/
+out/
+
+# Eclipse
+.classpath
+.project
+
+# Maven
+target/
+dependency-reduced-pom.xml
+
+# Gradle
+!gradle-wrapper.jar
+.gradle/
+build/
+*/build/
