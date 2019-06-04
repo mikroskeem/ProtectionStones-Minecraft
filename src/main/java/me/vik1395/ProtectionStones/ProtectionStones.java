@@ -43,6 +43,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.io.File;
 import java.lang.reflect.Field;
 import java.util.*;
+import java.util.logging.Logger;
 
 public class ProtectionStones extends JavaPlugin {
     // change this when the config version goes up
@@ -321,14 +322,14 @@ public class ProtectionStones extends JavaPlugin {
             try {
                 rm.save();
             } catch (Exception e) {
-                Bukkit.getLogger().severe("[ProtectionStones] WorldGuard Error [" + e + "] during Region File Save");
+                ProtectionStones.logger().severe("WorldGuard Error [" + e + "] during Region File Save");
             }
         }
     }
 
     // convert regions to use UUIDs instead of player names
     private static void convertToUUID() {
-        Bukkit.getLogger().info("Updating PS regions to UUIDs...");
+        ProtectionStones.logger().info("Updating PS regions to UUIDs...");
         for (World world : Bukkit.getWorlds()) {
             RegionManager rm = WorldGuard.getInstance().getPlatform().getRegionContainer().get(BukkitAdapter.adapt(world));
 
@@ -359,13 +360,21 @@ public class ProtectionStones extends JavaPlugin {
             try {
                 rm.save();
             } catch (Exception e) {
-                Bukkit.getLogger().severe("[ProtectionStones] WorldGuard Error [" + e + "] during Region File Save");
+                ProtectionStones.logger().severe("WorldGuard Error [" + e + "] during Region File Save");
             }
         }
 
         // update config to mark that uuid upgrade has been done
         config.set("uuidupdated", true);
         config.save();
-        Bukkit.getLogger().info("Done!");
+        ProtectionStones.logger().info("Done!");
+    }
+
+    public static ProtectionStones getInstance() {
+        return (ProtectionStones) ProtectionStones.getPlugin();
+    }
+
+    public static Logger logger() {
+        return getInstance().getLogger();
     }
 }

@@ -50,7 +50,7 @@ public class ArgPriority {
             try {
                 rgm.save();
             } catch (Exception e) {
-                Bukkit.getLogger().severe("[ProtectionStones] WorldGuard Error [" + e + "] during Region File Save");
+                ProtectionStones.logger().severe("WorldGuard Error [" + e + "] during Region File Save");
             }
             PSL.msg(p, PSL.PRIORITY_SET.msg());
         } catch (Exception e) {

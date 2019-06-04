@@ -39,7 +39,7 @@ public class ArgGet {
 
         // debug message
         if (!ProtectionStones.isVaultEnabled && cp.price != 0) {
-            Bukkit.getLogger().info("Vault is not enabled but there is a price set on the protection stone! It will not work!");
+            ProtectionStones.logger().info("Vault is not enabled but there is a price set on the protection stone! It will not work!");
         }
 
         // take money

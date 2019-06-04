@@ -82,7 +82,7 @@ public class ArgUnclaim {
         try {
             rgm.save();
         } catch (Exception e1) {
-            Bukkit.getLogger().severe("[ProtectionStones] WorldGuard Error [" + e1 + "] during Region File Save");
+            ProtectionStones.logger().severe("WorldGuard Error [" + e1 + "] during Region File Save");
         }
         PSL.msg(p, PSL.NO_LONGER_PROTECTED.msg());
 

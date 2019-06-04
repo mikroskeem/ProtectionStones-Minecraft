@@ -40,7 +40,7 @@ public class FlagHandler {
             registry.register(PS_HOME);
             registry.register(PS_BLOCK_MATERIAL);
         } catch (FlagConflictException e ) {
-            Bukkit.getLogger().severe("Flag conflict found! The plugin will not work properly! Please contact the developers of the plugin.");
+            ProtectionStones.logger().severe("Flag conflict found! The plugin will not work properly! Please contact the developers of the plugin.");
             e.printStackTrace();
         }
     }
@@ -70,7 +70,7 @@ public class FlagHandler {
                 FlagContext fc = FlagContext.create().setInput(settings).build();
                 b.regionFlags.put(flag, flag.parseInput(fc));
             } catch (Exception e) {
-                Bukkit.getLogger().info("Error parsing flag: " + split[0] + "\nError: ");
+                ProtectionStones.logger().info("Error parsing flag: " + split[0] + "\nError: ");
                 e.printStackTrace();
             }
         }

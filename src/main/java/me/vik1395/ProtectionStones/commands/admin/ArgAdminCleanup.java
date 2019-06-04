@@ -112,7 +112,7 @@ public class ArgAdminCleanup {
                 try {
                     rgm.save();
                 } catch (Exception e) {
-                    Bukkit.getLogger().severe("[ProtectionStones] WorldGuard Error [" + e + "] during Region File Save");
+                    ProtectionStones.logger().severe("WorldGuard Error [" + e + "] during Region File Save");
                 }
                 PSL.msg(p, PSL.ADMIN_CLEANUP_FOOTER.msg()
                         .replace("%arg%", args[2]));

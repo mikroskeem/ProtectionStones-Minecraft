@@ -111,7 +111,7 @@ public class Config {
 
         // load protection stones to options map
         if (ProtectionStones.blockDataFolder.listFiles().length == 0) {
-            Bukkit.getLogger().info("The blocks folder is empty! You do not have any protection blocks configured!");
+            ProtectionStones.logger().info("The blocks folder is empty! You do not have any protection blocks configured!");
         } else {
 
             // temp file to load in default ps block config
@@ -129,7 +129,7 @@ public class Config {
             template.load();
 
             // iterate over block files and load into map
-            Bukkit.getLogger().info("Protection Stone Blocks:");
+            ProtectionStones.logger().info("Protection Stone Blocks:");
             for (File file : ProtectionStones.blockDataFolder.listFiles()) {
 
                 CommentedFileConfig c = CommentedFileConfig.of(file);
@@ -159,12 +159,12 @@ public class Config {
                 ConfigProtectBlock b = new ObjectConverter().toObject(c, ConfigProtectBlock::new);
 
                 if (Material.getMaterial(b.type) == null) {
-                    Bukkit.getLogger().info("Unrecognized material: " + b.type);
-                    Bukkit.getLogger().info("Block will not be added. Please fix this in your config.");
+                    ProtectionStones.logger().info("Unrecognized material: " + b.type);
+                    ProtectionStones.logger().info("Block will not be added. Please fix this in your config.");
                     continue;
                 }
 
-                Bukkit.getLogger().info("- " + b.type + " (" + b.alias + ")");
+                ProtectionStones.logger().info("- " + b.type + " (" + b.alias + ")");
                 FlagHandler.initDefaultFlagsForBlock(b); // process flags for block and set regionFlags field
                 ProtectionStones.protectionStonesOptions.put(b.type, b); // add block
             }
@@ -194,7 +194,7 @@ public class Config {
                 leaveLoop = true;
                 break;
             default:
-                Bukkit.getLogger().info("Invalid config version! The plugin may not load correctly!");
+                ProtectionStones.logger().info("Invalid config version! The plugin may not load correctly!");
                 leaveLoop = true;
                 break;
         }
@@ -203,7 +203,7 @@ public class Config {
 
     // upgrade from config < v2.0.0
     public static void upgradeFromV1V2() {
-        Bukkit.getLogger().info(ChatColor.AQUA + "Upgrading configs from v1.x to v2.0+...");
+        ProtectionStones.logger().info(ChatColor.AQUA + "Upgrading configs from v1.x to v2.0+...");
 
         try {
             ProtectionStones.blockDataFolder.mkdir();
@@ -262,11 +262,11 @@ public class Config {
             e.printStackTrace();
         }
 
-        Bukkit.getLogger().info(ChatColor.GREEN + "Done!");
-        Bukkit.getLogger().info(ChatColor.GREEN + "Please be sure to double check your configs with the new options!");
+        ProtectionStones.logger().info(ChatColor.GREEN + "Done!");
+        ProtectionStones.logger().info(ChatColor.GREEN + "Please be sure to double check your configs with the new options!");
 
-        Bukkit.getLogger().info(ChatColor.AQUA + "Updating PS Regions to new format...");
+        ProtectionStones.logger().info(ChatColor.AQUA + "Updating PS Regions to new format...");
         ProtectionStones.upgradeRegions();
-        Bukkit.getLogger().info(ChatColor.GREEN + "Done!");
+        ProtectionStones.logger().info(ChatColor.GREEN + "Done!");
     }
 }
