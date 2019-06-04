@@ -17,11 +17,14 @@
 package me.vik1395.ProtectionStones;
 
 import com.sk89q.worldguard.WorldGuard;
-import com.sk89q.worldguard.protection.flags.*;
+import com.sk89q.worldguard.protection.flags.Flag;
+import com.sk89q.worldguard.protection.flags.FlagContext;
+import com.sk89q.worldguard.protection.flags.Flags;
+import com.sk89q.worldguard.protection.flags.InvalidFlagFormat;
+import com.sk89q.worldguard.protection.flags.StringFlag;
 import com.sk89q.worldguard.protection.flags.registry.FlagConflictException;
 import com.sk89q.worldguard.protection.flags.registry.FlagRegistry;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
-import org.bukkit.Bukkit;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 
@@ -91,14 +94,14 @@ public class FlagHandler {
             region.setFlag(flag.getRegionGroupFlag(), null);
             PSL.msg(p, PSL.FLAG_SET.msg().replace("%flag%", args[1]));
         } else {
-            String settings = "";
+            StringBuilder settings = new StringBuilder();
             if (args[1].equalsIgnoreCase("-g")) {
-                for (int i = 4; i < args.length; i++) settings += args[i] + " ";
+                for (int i = 4; i < args.length; i++) settings.append(args[i]).append(" ");
             } else {
-                for (int i = 2; i < args.length; i++) settings += args[i] + " ";
+                for (int i = 2; i < args.length; i++) settings.append(args[i]).append(" ");
             }
 
-            FlagContext fc = FlagContext.create().setInput(settings.trim()).build();
+            FlagContext fc = FlagContext.create().setInput(settings.toString().trim()).build();
             try {
                 region.setFlag(flag, flag.parseInput(fc));
                 if (args[1].equalsIgnoreCase("-g")) {

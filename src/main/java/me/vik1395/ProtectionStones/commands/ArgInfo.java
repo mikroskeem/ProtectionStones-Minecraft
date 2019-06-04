@@ -35,7 +35,7 @@ public class ArgInfo {
     public static boolean argumentInfo(Player p, String[] args) {
         String psID = ProtectionStones.playerToPSID(p);
 
-        WorldGuardPlugin wg = (WorldGuardPlugin) ProtectionStones.wgd;
+        WorldGuardPlugin wg = ProtectionStones.wgd;
         RegionManager rgm = ProtectionStones.getRegionManagerWithPlayer(p);
 
         if (psID.equals("")) {

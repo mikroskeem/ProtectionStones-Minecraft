@@ -36,7 +36,11 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.*;
+import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockPistonEvent;
+import org.bukkit.event.block.BlockPistonExtendEvent;
+import org.bukkit.event.block.BlockPistonRetractEvent;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
@@ -98,7 +102,7 @@ public class ListenerClass implements Listener {
             return;
         }
 
-        WorldGuardPlugin wg = (WorldGuardPlugin) ProtectionStones.wgd;
+        WorldGuardPlugin wg = ProtectionStones.wgd;
         RegionContainer regionContainer = WorldGuard.getInstance().getPlatform().getRegionContainer();
         RegionManager rm = regionContainer.get(BukkitAdapter.adapt(e.getPlayer().getWorld()));
 
@@ -277,7 +281,7 @@ public class ListenerClass implements Listener {
         // check if block broken is protection stone
         if (blockOptions == null) return;
 
-        WorldGuardPlugin wg = (WorldGuardPlugin) ProtectionStones.wgd;
+        WorldGuardPlugin wg = ProtectionStones.wgd;
 
         RegionContainer regionContainer = WorldGuard.getInstance().getPlatform().getRegionContainer();
         RegionManager rgm = regionContainer.get(BukkitAdapter.adapt(p.getWorld()));
@@ -396,7 +400,7 @@ public class ListenerClass implements Listener {
 
         if (event.getPlayer().hasPermission("protectionstones.tp.bypassprevent")) return;
 
-        WorldGuardPlugin wg = (WorldGuardPlugin) ProtectionStones.wgd;
+        WorldGuardPlugin wg = ProtectionStones.wgd;
         RegionManager rgm = WorldGuard.getInstance().getPlatform().getRegionContainer().get(BukkitAdapter.adapt(event.getTo().getWorld()));
         BlockVector3 v = BlockVector3.at(event.getTo().getX(), event.getTo().getY(), event.getTo().getZ());
 

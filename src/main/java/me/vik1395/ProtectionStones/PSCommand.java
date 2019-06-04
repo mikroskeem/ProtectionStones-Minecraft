@@ -1,6 +1,20 @@
 package me.vik1395.ProtectionStones;
 
-import me.vik1395.ProtectionStones.commands.*;
+import me.vik1395.ProtectionStones.commands.ArgAddRemove;
+import me.vik1395.ProtectionStones.commands.ArgAdmin;
+import me.vik1395.ProtectionStones.commands.ArgCount;
+import me.vik1395.ProtectionStones.commands.ArgFlag;
+import me.vik1395.ProtectionStones.commands.ArgGet;
+import me.vik1395.ProtectionStones.commands.ArgGive;
+import me.vik1395.ProtectionStones.commands.ArgHideUnhide;
+import me.vik1395.ProtectionStones.commands.ArgInfo;
+import me.vik1395.ProtectionStones.commands.ArgPriority;
+import me.vik1395.ProtectionStones.commands.ArgRegion;
+import me.vik1395.ProtectionStones.commands.ArgReload;
+import me.vik1395.ProtectionStones.commands.ArgSethome;
+import me.vik1395.ProtectionStones.commands.ArgTp;
+import me.vik1395.ProtectionStones.commands.ArgUnclaim;
+import me.vik1395.ProtectionStones.commands.ArgView;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.HoverEvent;
@@ -85,7 +99,6 @@ public class PSCommand extends Command {
                     case "region":
                         return ArgRegion.argumentRegion(p, args);
                     case "tp":
-                        return ArgTp.argumentTp(p, args);
                     case "home":
                         return ArgTp.argumentTp(p, args);
                     case "unclaim":

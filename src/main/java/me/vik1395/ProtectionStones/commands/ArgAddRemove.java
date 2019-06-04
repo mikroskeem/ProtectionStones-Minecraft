@@ -18,13 +18,14 @@ package me.vik1395.ProtectionStones.commands;
 
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import com.sk89q.worldguard.protection.managers.RegionManager;
-import me.vik1395.ProtectionStones.*;
+import me.vik1395.ProtectionStones.PSL;
+import me.vik1395.ProtectionStones.ProtectionStones;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
 public class ArgAddRemove {
-    private static OfflinePlayer checks(Player p, String args[], String psID, RegionManager rgm, WorldGuardPlugin wg, String permType) {
+    private static OfflinePlayer checks(Player p, String[] args, String psID, RegionManager rgm, WorldGuardPlugin wg, String permType) {
         if (permType.equals("members") && !p.hasPermission("protectionstones.members")) {
             PSL.msg(p, PSL.NO_PERMISSION_MEMBERS.msg());
             return null;
@@ -58,7 +59,7 @@ public class ArgAddRemove {
     public static boolean template(Player p, String[] args, String type) {
         String psID = ProtectionStones.playerToPSID(p);
 
-        WorldGuardPlugin wg = (WorldGuardPlugin) ProtectionStones.wgd;
+        WorldGuardPlugin wg = ProtectionStones.wgd;
         RegionManager rgm = ProtectionStones.getRegionManagerWithPlayer(p);
         OfflinePlayer op = checks(p, args, psID, rgm, wg, (type.equals("add") || type.equals("remove")) ? "members" : "owners"); // validate permissions and stuff
         if (op == null) return true;

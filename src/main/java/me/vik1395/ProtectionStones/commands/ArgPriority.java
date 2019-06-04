@@ -20,14 +20,13 @@ import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import com.sk89q.worldguard.protection.managers.RegionManager;
 import me.vik1395.ProtectionStones.PSL;
 import me.vik1395.ProtectionStones.ProtectionStones;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 public class ArgPriority {
     public static boolean argPriority(Player p, String[] args) {
         String psID = ProtectionStones.playerToPSID(p);
 
-        WorldGuardPlugin wg = (WorldGuardPlugin) ProtectionStones.wgd;
+        WorldGuardPlugin wg = ProtectionStones.wgd;
         RegionManager rgm = ProtectionStones.getRegionManagerWithPlayer(p);
 
         if (!p.hasPermission("protectionstones.priority")) {

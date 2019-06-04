@@ -19,8 +19,11 @@ package me.vik1395.ProtectionStones.commands;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import com.sk89q.worldguard.protection.managers.RegionManager;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
-import me.vik1395.ProtectionStones.*;
-import org.bukkit.Bukkit;
+import me.vik1395.ProtectionStones.ConfigProtectBlock;
+import me.vik1395.ProtectionStones.FlagHandler;
+import me.vik1395.ProtectionStones.PSL;
+import me.vik1395.ProtectionStones.PSLocation;
+import me.vik1395.ProtectionStones.ProtectionStones;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -30,7 +33,7 @@ public class ArgUnclaim {
     public static boolean argumentUnclaim(Player p, String[] args) { // psID: id of the current region the player is in
         String psID = ProtectionStones.playerToPSID(p);
 
-        WorldGuardPlugin wg = (WorldGuardPlugin) ProtectionStones.wgd;
+        WorldGuardPlugin wg = ProtectionStones.wgd;
         RegionManager rgm = ProtectionStones.getRegionManagerWithPlayer(p);
         if (!p.hasPermission("protectionstones.unclaim")) {
             PSL.msg(p, PSL.NO_PERMISSION_UNCLAIM.msg());

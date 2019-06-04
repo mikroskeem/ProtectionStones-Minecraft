@@ -38,7 +38,7 @@ public class ArgView {
     public static boolean argumentView(Player p, String[] args) {
         String psID = ProtectionStones.playerToPSID(p);
 
-        WorldGuardPlugin wg = (WorldGuardPlugin) ProtectionStones.wgd;
+        WorldGuardPlugin wg = ProtectionStones.wgd;
         RegionManager rgm = ProtectionStones.getRegionManagerWithPlayer(p);
 
         if (!p.hasPermission("protectionstones.view")) {

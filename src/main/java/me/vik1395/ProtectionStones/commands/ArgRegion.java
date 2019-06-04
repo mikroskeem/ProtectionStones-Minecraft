@@ -33,7 +33,7 @@ public class ArgRegion {
 
     // /ps region
     public static boolean argumentRegion(Player p, String[] args) {
-        WorldGuardPlugin wg = (WorldGuardPlugin) ProtectionStones.wgd;
+        WorldGuardPlugin wg = ProtectionStones.wgd;
         RegionManager rgm = ProtectionStones.getRegionManagerWithPlayer(p);
 
         if (!p.hasPermission("protectionstones.region")) {

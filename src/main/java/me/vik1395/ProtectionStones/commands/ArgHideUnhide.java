@@ -31,7 +31,7 @@ public class ArgHideUnhide {
     public static boolean template(Player p, String arg) {
         String psID = ProtectionStones.playerToPSID(p);
 
-        WorldGuardPlugin wg = (WorldGuardPlugin) ProtectionStones.wgd;
+        WorldGuardPlugin wg = ProtectionStones.wgd;
         RegionManager rgm = ProtectionStones.getRegionManagerWithPlayer(p);
         ProtectedRegion r = rgm.getRegion(psID);
 

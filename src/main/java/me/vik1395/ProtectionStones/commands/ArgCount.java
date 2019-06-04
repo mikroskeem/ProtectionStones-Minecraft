@@ -31,7 +31,7 @@ public class ArgCount {
 
     // /ps count
     public static boolean argumentCount(Player p, String[] args) {
-        WorldGuardPlugin wg = (WorldGuardPlugin) ProtectionStones.wgd;
+        WorldGuardPlugin wg = ProtectionStones.wgd;
         RegionManager rgm = ProtectionStones.getRegionManagerWithPlayer(p);
         Bukkit.getScheduler().runTaskAsynchronously(ProtectionStones.getPlugin(), () -> {
             int count;

@@ -12,7 +12,7 @@ public class ArgSethome {
     public static boolean argumentSethome(Player p, String[] args) {
         String psID = ProtectionStones.playerToPSID(p);
 
-        WorldGuardPlugin wg = (WorldGuardPlugin) ProtectionStones.wgd;
+        WorldGuardPlugin wg = ProtectionStones.wgd;
         RegionManager rgm = ProtectionStones.getRegionManagerWithPlayer(p);
         if (!p.hasPermission("protectionstones.sethome")) {
             PSL.msg(p, PSL.NO_PERMISSION_SETHOME.msg());

@@ -225,7 +225,7 @@ public enum PSL {
     // Sends a message to a commandsender if the string is not empty
 
     public static void msg(CommandSender p, String str) {
-        if (str != null && !str.equals("")) {
+        if (str != null && !str.isEmpty()) {
             p.sendMessage(str);
         }
     }
@@ -243,7 +243,7 @@ public enum PSL {
         YamlConfiguration yml = YamlConfiguration.loadConfiguration(conf);
         for (PSL psl : PSL.values()) {
             if (yml.getString(psl.key) == null) {
-                yml.set(psl.key, psl.msg.replace('§', '&'));
+                yml.set(psl.key, ChatColor.translateAlternateColorCodes('&', psl.msg));
             } else {
                 keyToMsg.put(psl.key, yml.getString(psl.key));
             }

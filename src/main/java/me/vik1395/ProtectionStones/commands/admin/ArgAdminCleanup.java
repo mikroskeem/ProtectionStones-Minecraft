@@ -39,7 +39,7 @@ public class ArgAdminCleanup {
 
     // /ps admin cleanup
     public static boolean argumentAdminCleanup(CommandSender p, String[] args) {
-        WorldGuardPlugin wg = (WorldGuardPlugin) ProtectionStones.wgd;
+        WorldGuardPlugin wg = ProtectionStones.wgd;
         if (args.length < 3 || (!args[2].equalsIgnoreCase("remove") && !args[2].equalsIgnoreCase("disown"))) {
             PSL.msg(p, PSL.ADMIN_CLEANUP_HELP.msg());
             return true;
