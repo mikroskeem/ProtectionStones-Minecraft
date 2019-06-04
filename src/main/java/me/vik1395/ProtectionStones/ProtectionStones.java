@@ -22,12 +22,19 @@ import com.sk89q.worldedit.bukkit.BukkitAdapter;
 import com.sk89q.worldedit.math.BlockVector3;
 import com.sk89q.worldguard.LocalPlayer;
 import com.sk89q.worldguard.WorldGuard;
+import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import com.sk89q.worldguard.domains.DefaultDomain;
 import com.sk89q.worldguard.protection.managers.RegionManager;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import net.milkbowl.vault.economy.Economy;
 import org.bstats.bukkit.Metrics;
-import org.bukkit.*;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
+import org.bukkit.OfflinePlayer;
+import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.command.CommandMap;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -35,14 +42,16 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.tags.ItemTagType;
-import org.bukkit.permissions.Permission;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 import java.lang.reflect.Field;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 import java.util.logging.Logger;
 
 public class ProtectionStones extends JavaPlugin {
@@ -52,7 +61,8 @@ public class ProtectionStones extends JavaPlugin {
     public static Map<UUID, String> uuidToName = new HashMap<>();
     public static Map<String, UUID> nameToUUID = new HashMap<>();
 
-    public static Plugin plugin, wgd;
+    public static ProtectionStones plugin;
+    public static WorldGuardPlugin wgd;
     static File configLocation, blockDataFolder;
 
     private static Metrics metrics;
@@ -69,7 +79,7 @@ public class ProtectionStones extends JavaPlugin {
 
     static List<String> toggleList = new ArrayList<>();
 
-    public static Plugin getPlugin() {
+    public static ProtectionStones getPlugin() {
         return plugin;
     }
 
@@ -219,14 +229,7 @@ public class ProtectionStones extends JavaPlugin {
 
         // register event listeners
         getServer().getPluginManager().registerEvents(new ListenerClass(), this);
-
-        // check that WorldGuard and WorldEdit are enabled (Worldguard will only be enabled if there's worldedit)
-        if (getServer().getPluginManager().getPlugin("WorldGuard") != null && getServer().getPluginManager().getPlugin("WorldGuard").isEnabled()) {
-            wgd = getServer().getPluginManager().getPlugin("WorldGuard");
-        } else {
-            getServer().getConsoleSender().sendMessage("WorldGuard or WorldEdit not enabled! Disabling ProtectionStones...");
-            getServer().getPluginManager().disablePlugin(this);
-        }
+        wgd = (WorldGuardPlugin) getServer().getPluginManager().getPlugin("WorldGuard");
 
 
         // check if Vault is enabled (for economy support)_
@@ -370,11 +373,7 @@ public class ProtectionStones extends JavaPlugin {
         ProtectionStones.logger().info("Done!");
     }
 
-    public static ProtectionStones getInstance() {
-        return (ProtectionStones) ProtectionStones.getPlugin();
-    }
-
     public static Logger logger() {
-        return getInstance().getLogger();
+        return getPlugin().getLogger();
     }
 }
